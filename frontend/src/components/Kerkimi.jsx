@@ -35,7 +35,7 @@ function Kerkimi() {
               <option value="Gjilan">Gjilan</option>
               <option value="Dragash">Dragash</option>
               <option value="Kacanik">Kacanik</option>
-              <option value="Kline">kline</option>
+              <option value="Kline">Kline</option>
               <option value="Fushe Kosove">Fushe Kosove</option>
               <option value="Kamenice">Kamenice</option>
               <option value="Mitrovica">Mitrovica</option>
