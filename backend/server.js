@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const regjistrimiApi = require("./routes/regjistrimiApi");
+const kycjaApi = require("./routes/kycjaApi");
 require("dotenv").config();
 
 const app = express();
@@ -13,6 +14,7 @@ app.use(
 );
 app.use(express.json());
 app.use("/api/regjistrimi", regjistrimiApi);
+app.use("/api/kycja", kycjaApi);
 
 mongoose
   .connect(process.env.MONGO_URI)

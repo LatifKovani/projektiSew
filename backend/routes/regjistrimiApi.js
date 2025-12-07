@@ -1,40 +1,75 @@
 const express = require("express");
 const router = express.Router();
-const Aplikant = require("../models/aplikantSchema");
-const Punedhenes = require("../models/punedhenesSchema");
+const User = require("../models/userSchema");
 
 router.post("/perdoruesi", async (req, res) => {
   try {
     console.log(req.body);
 
     let savedUser;
-    const { tipi, email, fjalekalimi, ...otherData } = req.body;
+    const { tipi, email, fjalekalimi, emri, mbiemri, kompania } = req.body;
 
-    if (!tipi || !email || !fjalekalimi) {
+    const user = await User.findOne({ email });
+
+    if (user) {
       return res.status(400).json({
-        success: false,
-        message: "Ploteso fushat!",
+        error: "perdoruesi ekziston",
       });
     }
 
     if (tipi === "aplikant") {
-      const { emri, mbiemri } = otherData;
+      if (!emri) {
+        return res.status(400).json({
+          error: "Nuk e keni shenuar emrin",
+        });
+      }
+      if (!mbiemri) {
+        return res.status(400).json({
+          error: "Nuk e keni shenuar mbiemrin",
+        });
+      }
+      if (!email) {
+        return res.status(400).json({
+          error: "Nuk e keni shenuar emailin",
+        });
+      }
+      if (!fjalekalimi) {
+        return res.status(400).json({
+          error: "Nuk e keni shenuar fjalekalimin",
+        });
+      }
 
-      const aplikant = new Aplikant({
+      const aplikant = new User({
         emri,
         mbiemri,
         email,
         fjalekalimi,
+        tipi,
       });
 
       savedUser = await aplikant.save();
     } else if (tipi === "punedhenes") {
-      const { kompania } = otherData;
+      if (!kompania) {
+        return res.status(400).json({
+          error: "Nuk e keni shenuar emrin e kompanise",
+        });
+      }
+      if (!email) {
+        return res.status(400).json({
+          error: "Nuk e keni shenuar emailin",
+        });
+      }
+      if (!fjalekalimi) {
+        return res.status(400).json({
+          error: "Nuk e keni shenuar fjalekalimin",
+        });
+      }
 
-      const punedhenes = new Punedhenes({
+      const punedhenes = new User({
         kompania,
         email,
         fjalekalimi,
+        tipi,
       });
 
       savedUser = await punedhenes.save();
@@ -51,10 +86,10 @@ router.post("/perdoruesi", async (req, res) => {
       } u regjistrua me sukses!`,
     });
   } catch (error) {
-    console.error("Error in regjistrohu:", error);
+    console.error(error);
     res.status(500).json({
       success: false,
-      message: "Gabim i brendshëm i serverit",
+      message: "Gabim i brendshem i serverit",
       error: error.message,
     });
   }
