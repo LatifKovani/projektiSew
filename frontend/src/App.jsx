@@ -11,10 +11,12 @@ import Shpallja from "./components/Shpallja";
 import Profili from "./components/Profili";
 import VerifikoEmail from "./components/VerifikoEmail";
 import Aplikimi from "./components/Aplikimi";
+import Footeri from "./components/Footeri";
+
 
 function App() {
   return (
-    <BrowserRouter>
+   <BrowserRouter>
       <Routes>
         <Route path="/" element={<Ballina />} />
         <Route path="/listaPuneve" element={<ListaPuneve />} />
@@ -26,9 +28,12 @@ function App() {
         <Route path="/shpallja/:id" element={<Shpallja />} />
         <Route path="/profili/:id" element={<Profili />} />
         <Route path="/verifiko" element={<VerifikoEmail />} />
-        <Route path="/shpallja/:id/aplikimi" element={<Aplikimi />} /> // Todo:
-        change path
+        {/* TODO: change path */}
+        <Route path="/shpallja/:id/aplikimi" element={<Aplikimi />} />
       </Routes>
+
+      {/* FOOTER GLOBAL */}
+      <Footeri />
     </BrowserRouter>
   );
 }
