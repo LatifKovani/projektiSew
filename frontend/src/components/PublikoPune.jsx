@@ -98,112 +98,133 @@ function PublikoPune() {
   };
 
   return (
-    <div className="min-h-screen grid place-items-center py-8 px-4 space-y-10 bg-linear-to-br from-blue-50 via-white to-indigo-50">
-      <Link to="/" className="underline text-blue-600">
-        Ballina
-      </Link>
-      <div className="grid rounded-3xl shadow-lg w-full max-w-xl py-10 sm:max-w-2xl md:max-w-4xl bg-linear-to-r from-blue-600 to-indigo-600">
-        <h1 className="text-white text-3xl md:text-4xl px-10">
-          Publiko Punë të Re
-        </h1>
-        <p className="text-xl px-10 text-blue-100 py-3">
+    <div className="min-h-screen grid place-items-center my-20">
+      <div className="grid rounded-xl border-2 border-gray-300 w-full max-w-xl py-10 sm:max-w-2xl md:max-w-4xl ">
+        <h1 className="text-3xl md:text-4xl px-10">Publiko Punë të Re</h1>
+        <p className="text-xl px-10 text-gray-600 py-3">
           Plotësoni formularin për të publikuar shpalljen tuaj
         </p>
-      </div>
-
-      <div className="grid rounded-3xl shadow-2xl w-full max-w-xl py-10 sm:max-w-2xl md:max-w-4xl ">
-        <h1 className="text-xl md:text-2xl px-10">Informacione Bazike</h1>
+        <hr className="border-gray-400 mx-5 my-3" />
+        <h1 className="text-xl md:text-2xl px-10 mt-6">Informacione Bazike</h1>
         <form onSubmit={handleSubmit} className="grid gap-4 p-10">
-          <label htmlFor="pozitaPunes"> </label>
-          <input
-            className="border border-gray-400 block rounded-xl p-3 "
-            type="text"
-            id="pozitaPunes"
-            placeholder="Pozita e Punës"
-            onChange={(e) =>
-              setFormData({ ...formData, pozitaPunes: e.target.value })
-            }
-          />
-          <label htmlFor="kategoriaPunes"> </label>
-          <select
-            id="kategoriaPunes"
-            className="border border-gray-400 block rounded-xl p-3 "
-            value={formData.kategoriaPunes}
-            onChange={(e) =>
-              setFormData({ ...formData, kategoriaPunes: e.target.value })
-            }
-          >
-            <option value="" disabled>
-              Kategoria
-            </option>
-            <option value="administrate">Administrate</option>
-            <option value="it">IT</option>
-          </select>
-          <label htmlFor="lokacioniPunes"> </label>
-          <input
-            className="border border-gray-400 block rounded-xl p-3 "
-            type="text"
-            id="lokacioniPunes"
-            placeholder="Lokacioni i Punës"
-            onChange={(e) =>
-              setFormData({ ...formData, lokacioniPunes: e.target.value })
-            }
-          />
-          <label htmlFor="niveliPunes"></label>
-          <select
-            id="niveliPunes"
-            className="border border-gray-400 block rounded-xl p-3 "
-            value={formData.niveliPunes}
-            onChange={(e) =>
-              setFormData({ ...formData, niveliPunes: e.target.value })
-            }
-          >
-            <option value="" disabled>
-              Zgjedh Nivelin
-            </option>
-            <option value="praktike">Praktikë</option>
-            <option value="fillestar">Fillestar</option>
-            <option value="junior">Junior</option>
-            <option value="mid">Mid-Level</option>
-            <option value="senior">Senior</option>
-            <option value="lider">Lider</option>
-            <option value="menaxher">Menaxher</option>
-            <option value="drejtor">Drejtor</option>
-          </select>
-          <label htmlFor="llojiPunesimit"></label>
-          <select
-            id="llojiPunesimit"
-            className="border border-gray-400 block rounded-xl p-3 "
-            value={formData.llojiPunesimit}
-            onChange={(e) =>
-              setFormData({ ...formData, llojiPunesimit: e.target.value })
-            }
-          >
-            <option value="" disabled>
-              Zgjedh Llojin
-            </option>
-            <option value="fulltime">Full-Time</option>
-            <option value="parttime">Part-Time</option>
-            <option value="contract">Kontratë</option>
-            <option value="temporary">E Përkohshme</option>
-            <option value="internship">Praktikë</option>
-          </select>
-          <label htmlFor="pershkrimiPunes"></label>
+          <div>
+            <label htmlFor="pozitaPunes" className="label">
+              Emri
+            </label>
+            <input
+              className="input"
+              type="text"
+              id="pozitaPunes"
+              placeholder="Pozita e Punës"
+              onChange={(e) =>
+                setFormData({ ...formData, pozitaPunes: e.target.value })
+              }
+            />
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div className="col-span-1">
+              <label htmlFor="kategoriaPunes" className="label">
+                Kategoria
+              </label>
+              <select
+                id="kategoriaPunes"
+                className="input"
+                value={formData.kategoriaPunes}
+                onChange={(e) =>
+                  setFormData({ ...formData, kategoriaPunes: e.target.value })
+                }
+              >
+                <option value="" disabled>
+                  Kategoria
+                </option>
+                <option value="administrate">Administrate</option>
+                <option value="it">IT</option>
+              </select>
+            </div>
+            <div className="col-span-1">
+              <label htmlFor="lokacioniPunes" className="label">
+                Lokacioni
+              </label>
+              <input
+                className="input"
+                type="text"
+                id="lokacioniPunes"
+                placeholder="Lokacioni i Punës"
+                onChange={(e) =>
+                  setFormData({ ...formData, lokacioniPunes: e.target.value })
+                }
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div className="col-span-1">
+              <label htmlFor="niveliPunes" className="label">
+                Niveli Punes
+              </label>
+              <select
+                id="niveliPunes"
+                className="input"
+                value={formData.niveliPunes}
+                onChange={(e) =>
+                  setFormData({ ...formData, niveliPunes: e.target.value })
+                }
+              >
+                <option value="" disabled>
+                  Zgjedh Nivelin
+                </option>
+                <option value="Praktike">Praktikë</option>
+                <option value="Fillestar">Fillestar</option>
+                <option value="Junior">Junior</option>
+                <option value="Mid">Mid-Level</option>
+                <option value="Senior">Senior</option>
+                <option value="Lider">Lider</option>
+                <option value="Menaxher">Menaxher</option>
+                <option value="Drejtor">Drejtor</option>
+              </select>
+            </div>
+            <div className="col-span-1">
+              <label htmlFor="eksperienca" className="label">
+                Eksperienca
+              </label>
+              <select
+                id="eksperienca"
+                className="input"
+                value={formData.eksperienca}
+                onChange={(e) =>
+                  setFormData({ ...formData, eksperienca: e.target.value })
+                }
+              >
+                <option value="" disabled>
+                  Eksperienca
+                </option>
+                <option value="0-6 muaj">0-6 muaj</option>
+                <option value="1">1 vjet</option>
+                <option value="1-2">1-2 vjet</option>
+                <option value="2-3">2-3 vjet</option>
+                <option value="3-6">3-6 vjet</option>
+              </select>
+            </div>
+          </div>
+          <hr className="border-gray-400 mt-10" />
+
+          <h1 className="text-xl md:text-2xl  mt-6">
+            Pershkrimi dhe Pergjegjesite e punes
+          </h1>
+          <label htmlFor="pershkrimiPunes" className="label"></label>
           <textarea
             id="pershkrimiPunes"
             rows="5"
             cols="40"
-            className="border border-gray-400 block rounded-xl p-3 "
+            className="input"
             placeholder="Pershkrimi Punes"
             onChange={(e) =>
               setFormData({ ...formData, pershkrimiPunes: e.target.value })
             }
           ></textarea>
-          <hr className="border-gray-200 my-5" />
           {pyetjet.length > 0 && (
             <>
-              <h1 className="text-xl md:text-2xl">Pyetje për Aplikantët</h1>
-              <div className="bg-linear-to-br from-gray-50 to-blue-50 grid rounded-2xl border-2 border-gray-200 hover:border-blue-300 transition-all duration-200">
+              <h1 className="label !text-l">Pergjegjesite</h1>
+              <div className="grid rounded-sm border-2 border-gray-200 ">
                 {pyetjet.map((pyetja, i) => {
                   return (
                     <div
@@ -224,12 +245,11 @@ function PublikoPune() {
               </div>
             </>
           )}
-          <div className="border rounded-2xl border-blue-100 bg-linear-to-br from-gray-50 to-blue-50 flex justify-between gap-5 py-10 px-2">
-            <label htmlFor="pyetja"></label>
+          <div className="border border-gray-400 rounded-sm flex justify-between gap-5 py-10 px-4">
             <input
               type="text"
-              placeholder="Sheno pyetjen"
-              className="border border-gray-400 block rounded-xl p-1 w-full"
+              placeholder="Sheno kerkesen"
+              className="w-full border-0 border-b-2 border-gray-400 focus:border-blue-500 focus:ring-0 px-1 py-2 transition-colors"
               value={pyetjaTanishme}
               onChange={(e) => setPyetjaTanishme(e.target.value)}
             />
@@ -242,6 +262,8 @@ function PublikoPune() {
             </button>
           </div>
 
+          <hr className="border-gray-300 my-3" />
+          <h1 className="text-xl md:text-2xl  mt-6">Kerkesat dhe Aftesite</h1>
           <div className="flex justify-end">
             <button type="submit" className="publikoPune w-fit">
               Publiko
@@ -254,4 +276,3 @@ function PublikoPune() {
 }
 
 export default PublikoPune;
-4;
