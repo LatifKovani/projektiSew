@@ -17,3 +17,9 @@
 .butoniKycjeRegjistrim {
   @apply border block rounded-sm p-1 w-full sm:w-80 md:w-96 lg:w-[350px] h-10 sm:h-12 md:h-14 lg:h-10 hover:bg-blue-400 hover:text-white cursor-pointer;
 }
+.input {
+  @apply border border-gray-400 rounded-sm p-3 w-full box-border;
+}
+.label {
+  @apply text-gray-600 px-1 font-semibold;
+}
