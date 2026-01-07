@@ -1,14 +1,10 @@
 import Header from "./Header";
-import { Link } from "react-router-dom";
-import { faUser } from "@fortawesome/free-regular-svg-icons";
-import { faBriefcase } from "@fortawesome/free-solid-svg-icons";
 import Kerkimi from "./Kerkimi";
 import "../index.css";
 import ShpalljaCard from "./ShpalljaCard";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useSearchParams } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PublikoPune from "./PublikoPune";
 
 function Ballina() {
@@ -48,7 +44,7 @@ function Ballina() {
           if (response.data.success) {
             setShpalljaData(response.data.data || []);
           } else {
-            console.error("Gabim ne kerkim: ", response.data.error);
+            console.error("Gabim ne kerkim:  ", response.data.error);
           }
         } else {
           const response = await axios.get(
@@ -94,75 +90,37 @@ function Ballina() {
     <div>
       {perdoruesiData?.tipiPerdoruesit === "punedhenes" ? (
         <>
-          <div className=" bg-white shadow-md py-7 px-6 mx-auto flex justify-between items-center ml-auto text-l rounded-2xl">
-            <Header />
-            <div className="flex space-x-4 ml-auto items-center">
-              <Link to={`/profili/${perdoruesiData._id}`}>
-                <FontAwesomeIcon icon={faBriefcase} />
-                {perdoruesiData.kompania}
-              </Link>
-              <button
-                type="button"
-                className="cursor-pointer publikoPune bg-red-500!"
-                onClick={handleCkycja}
-              >
-                C'kycu
-              </button>
-            </div>
+          <div className="bg-white shadow-md py-7 px-6 mx-auto flex justify-between items-center text-l rounded-2xl">
+            <Header perdoruesiData={perdoruesiData} onCkycja={handleCkycja} />
           </div>
           <PublikoPune />
         </>
       ) : (
         <>
-          <div className="bg-white shadow-md py-7 px-6 mx-auto flex justify-between items-center ml-auto text-l rounded-2xl">
-            <Header />
-
-            {perdoruesiData ? (
-              <div className="flex space-x-4 ml-auto items-center">
-                <Link to={`/profili/${perdoruesiData._id}`}>
-                  <FontAwesomeIcon icon={faUser} />
-                  {perdoruesiData.emri}
-                </Link>
-                <button
-                  type="button"
-                  className="cursor-pointer publikoPune bg-red-500!"
-                  onClick={handleCkycja}
-                >
-                  C'kycu
-                </button>
-              </div>
-            ) : (
-              <div className="flex space-x-4 ml-auto">
-                <Link to="/kycja" className="kycja">
-                  Kycu/Regjistrohu
-                </Link>
-                <Link to="/publikopune" className="publikoPune">
-                  Publiko Pune
-                </Link>
-              </div>
-            )}
+          <div className="bg-white shadow-md py-7 px-6 mx-auto flex justify-between items-center text-l rounded-2xl">
+            <Header perdoruesiData={perdoruesiData} onCkycja={handleCkycja} />
           </div>
 
-          <div className="flex justify-center items-center text-5xl my-15">
-            <h1 className="">Gjeni punen perfekte per ju</h1>
+          <div className="flex justify-center items-center px-4 my-8 md:my-12 lg:my-15">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center font-semi-bold leading-tight">
+              Gjeni punen perfekte per ju {perdoruesiData?.emri}
+            </h1>
           </div>
 
           <Kerkimi />
-          <div className="m-10 md:m-20 lg:m-30">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6 m-10 md:m-15 lg:m-20">
-              {shpalljaData.map((shpallja) => {
-                return <ShpalljaCard key={shpallja._id} shpallja={shpallja} />;
-              })}
-              {shpalljaData.length === 0 && (
-                <div className="text-center p-10">
-                  <p>
-                    {kerkoParams.toString()
-                      ? "Nuk u gjet asnjë punë me këto kërkime"
-                      : "Nuk ka punë të disponueshme"}
-                  </p>
-                </div>
-              )}{" "}
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[repeat(3,430px)] xl:grid-cols-[repeat(3,430px)] gap-10 justify-center auto-rows-[220px] m-10 md:m-15 lg:m-30">
+            {shpalljaData.map((shpallja) => {
+              return <ShpalljaCard key={shpallja._id} shpallja={shpallja} />;
+            })}
+            {shpalljaData.length === 0 && (
+              <div className="text-center p-10">
+                <p>
+                  {kerkoParams.toString()
+                    ? "Nuk u gjet asnjë punë me këto kërkime"
+                    : "Nuk ka punë të disponueshme"}
+                </p>
+              </div>
+            )}
           </div>
         </>
       )}
