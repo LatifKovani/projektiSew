@@ -1,10 +1,14 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import "../App.css";
 import "../index.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAtlassian } from "@fortawesome/free-brands-svg-icons/faAtlassian";
-import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBars,
+  faTimes,
+  faChevronDown,
+} from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import { faBriefcase } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
@@ -12,8 +16,9 @@ import axios from "axios";
 function Header() {
   const navigate = useNavigate();
   const [perdoruesiData, setPerdoruesiData] = useState(null);
-
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -22,6 +27,31 @@ function Header() {
   const closeMenu = () => {
     setIsMenuOpen(false);
   };
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const closeDropdown = () => {
+    setIsDropdownOpen(false);
+  };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        closeDropdown();
+      }
+    };
+
+    if (isDropdownOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isDropdownOpen]);
 
   const handleCkycja = async () => {
     try {
@@ -36,6 +66,7 @@ function Header() {
       localStorage.removeItem("token");
 
       console.log("Ckycja u be", response.data);
+      closeDropdown();
       navigate("/");
     } catch (error) {
       console.error(error);
@@ -69,8 +100,11 @@ function Header() {
     console.log(perdoruesiData);
   }, [perdoruesiData]);
 
+  // Check if user is punedhenes
+  const isPunedhenes = perdoruesiData?.tipiPerdoruesit === "punedhenes";
+
   return (
-    <div className="flex items-center w-full bg-white shadow-md py-7 px-6 mx-auto flex justify-between items-center text-l rounded-2xl">
+    <div className="flex items-center justify-between w-full bg-white shadow-md py-7 px-6 mx-auto text-l rounded-2xl">
       <Link to="/" className="flex items-center mr-8">
         <FontAwesomeIcon icon={faAtlassian} className="text-2xl" />
       </Link>
@@ -85,6 +119,12 @@ function Header() {
         <Link to="/listaKompanive" className="nav-link">
           Lista e Kompanive
         </Link>
+        {/* Show "Publiko Pune" LINK in navbar ONLY for punedhenes users */}
+        {isPunedhenes && (
+          <Link to="/PublikoPune" className="nav-link">
+            Publiko Pune
+          </Link>
+        )}
         <Link to="/rrethNesh" className="nav-link">
           Rreth Nesh
         </Link>
@@ -93,42 +133,66 @@ function Header() {
       <div className="hidden md:flex space-x-4 items-center ml-auto">
         {perdoruesiData ? (
           <>
-            <Link
-              to={`/profili/${perdoruesiData._id}`}
-              className="flex items-center"
-            >
-              <FontAwesomeIcon
-                icon={
-                  perdoruesiData.tipiPerdoruesit === "punedhenes"
-                    ? faBriefcase
-                    : faUser
-                }
-                className="mr-2"
-              />
-              {perdoruesiData.tipiPerdoruesit === "punedhenes"
-                ? perdoruesiData.kompania
-                : perdoruesiData.emri}
-            </Link>
-            <button
-              type="button"
-              className="bg-red-500 text-white px-6 py-2 rounded hover:bg-red-600 transition"
-              onClick={handleCkycja}
-            >
-              C'kycu
-            </button>
+            <div className="relative" ref={dropdownRef}>
+              <button
+                onClick={toggleDropdown}
+                className="flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors"
+              >
+                <FontAwesomeIcon
+                  icon={
+                    perdoruesiData.tipiPerdoruesit === "punedhenes"
+                      ? faBriefcase
+                      : faUser
+                  }
+                  className="text-gray-700"
+                />
+                <span className="text-gray-700 font-medium">
+                  {perdoruesiData.tipiPerdoruesit === "punedhenes"
+                    ? perdoruesiData.kompania
+                    : perdoruesiData.emri}
+                </span>
+                <FontAwesomeIcon
+                  icon={faChevronDown}
+                  className={`text-gray-500 text-sm transition-transform ${
+                    isDropdownOpen ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+
+              {isDropdownOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
+                  <Link
+                    to={`/profili/${perdoruesiData._id}`}
+                    className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
+                    onClick={closeDropdown}
+                  >
+                    <FontAwesomeIcon icon={faUser} className="mr-3" />
+                    Profili
+                  </Link>
+                  <hr className="my-2 border-gray-200" />
+                  <button
+                    type="button"
+                    className="w-full text-left flex items-center px-4 py-2 text-red-600 hover:bg-red-50 transition-colors"
+                    onClick={handleCkycja}
+                  >
+                    <span>C'kycu</span>
+                  </button>
+                </div>
+              )}
+            </div>
           </>
         ) : (
           <>
             <Link to="/kycja" className="kycja">
               Kycu/Regjistrohu
             </Link>
-            <Link to="/publikopune" className="publikoPune">
+            {/* Show "Publiko Pune" BUTTON  for non-logged users */}
+            <Link to="/PublikoPune" className="publikoPune">
               Publiko Pune
             </Link>
           </>
         )}
       </div>
-
       <button
         className="md:hidden text-2xl ml-auto"
         onClick={toggleMenu}
@@ -140,7 +204,7 @@ function Header() {
       {isMenuOpen && (
         <>
           <div
-            className="fixed inset-0 bg-black/50 z-40 md: hidden"
+            className="fixed inset-0 bg-black/50 z-40 md:hidden"
             onClick={closeMenu}
           ></div>
 
@@ -177,6 +241,17 @@ function Header() {
                 Rreth Nesh
               </Link>
 
+              {/* Show "Publiko Pune" LINK in mobile menu ONLY for punedhenes */}
+              {isPunedhenes && (
+                <Link
+                  to="/PublikoPune"
+                  className="nav-link text-lg"
+                  onClick={closeMenu}
+                >
+                  Publiko Pune
+                </Link>
+              )}
+
               {perdoruesiData ? (
                 <>
                   <Link
@@ -198,9 +273,9 @@ function Header() {
                   </Link>
                   <button
                     type="button"
-                    className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
+                    className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition text-left"
                     onClick={() => {
-                      onCkycja();
+                      handleCkycja();
                       closeMenu();
                     }}
                   >
@@ -216,8 +291,9 @@ function Header() {
                   >
                     Kycu/Regjistrohu
                   </Link>
+                  {/* Show "Publiko Pune" BUTTON for non-logged users in mobile */}
                   <Link
-                    to="/publikopune"
+                    to="/PublikoPune"
                     className="publikoPune text-lg"
                     onClick={closeMenu}
                   >

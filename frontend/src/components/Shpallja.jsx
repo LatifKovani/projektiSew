@@ -170,7 +170,7 @@ function Shpallja() {
                   <div className="text-center">
                     <p className="font-medium text-gray-700">Eksperienca</p>
                     <p className="text-lg font-bold mt-1">
-                      {shpallja.eksperienca || ""}
+                      {shpallja.eksperienca || ""} vjet
                     </p>
                   </div>
 
@@ -208,13 +208,42 @@ function Shpallja() {
                 className="mb-8 pt-8 border-t border-gray-200"
               >
                 <h1 className="text-xl font-bold mb-3">Përgjegjësitë</h1>
+                {shpallja.pyetjet && shpallja.pyetjet.length > 0 ? (
+                  <ul className="space-y-2">
+                    {shpallja.pyetjet.map((pyetja, index) => (
+                      <li key={index} className="flex items-start">
+                        <span className="text-gray-700 mr-3">•</span>
+                        <span className="text-gray-700">{pyetja}</span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-gray-500 italic">
+                    Nuk ka përgjegjësi të specifikuara.
+                  </p>
+                )}
               </section>
-
               <section
                 id="kerkesat"
                 className="mb-8 pt-8 border-t border-gray-200"
               >
-                <h1 className="text-xl font-bold mb-3">Kërkesat</h1>
+                <h1 className="text-xl font-bold mb-3">
+                  Kualifikimet e kërkuara
+                </h1>
+                {shpallja.kualifikimet && shpallja.kualifikimet.length > 0 ? (
+                  <ul className="space-y-2">
+                    {shpallja.kualifikimet.map((kerkesa, index) => (
+                      <li key={index} className="flex items-start">
+                        <span className="text-gray-700 mr-3">•</span>
+                        <span className="text-gray-700">{kerkesa}</span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-gray-500 italic">
+                    Nuk ka kualifikme të specifikuara.
+                  </p>
+                )}
               </section>
             </div>
           </div>
