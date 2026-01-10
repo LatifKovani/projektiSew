@@ -32,6 +32,11 @@ const shpalljaSchema = new mongoose.Schema({
   pyetjet: {
     type: [String],
   },
+  kualifikimet: {
+    type: [String],
+    default: [],
+    required: false,
+  },
   niveliPunes: {
     type: String,
     enum: [
@@ -51,7 +56,7 @@ const shpalljaSchema = new mongoose.Schema({
   orari: {
     type: [String],
     enum: ["", "Fulltime", "Part-time"],
-    required: false,
+    required: true,
     default: [],
   },
   eksperienca: {
@@ -60,11 +65,11 @@ const shpalljaSchema = new mongoose.Schema({
   },
   pagaPrej: {
     type: Number,
-    required: true,
+    required: false,
   },
   pagaDeri: {
     type: Number,
-    required: true,
+    required: false,
   },
   dataKrijimit: {
     type: Date,
