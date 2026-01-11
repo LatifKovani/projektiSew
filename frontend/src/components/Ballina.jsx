@@ -4,35 +4,13 @@ import "../index.css";
 import ShpalljaCard from "./ShpalljaCard";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import PublikoPune from "./PublikoPune";
 
 function Ballina() {
-  const navigate = useNavigate();
   const [shpalljaData, setShpalljaData] = useState([]);
   const [perdoruesiData, setPerdoruesiData] = useState(null);
   const [kerkoParams] = useSearchParams();
-
-  const handleCkycja = async () => {
-    try {
-      const response = await axios.post(
-        "http://localhost:3000/api/ckycja/perdoruesi",
-        {},
-        { withCredentials: true },
-      );
-
-      setPerdoruesiData(null);
-      localStorage.removeItem("user");
-      localStorage.removeItem("token");
-
-      console.log("Ckycja u be", response.data);
-      navigate("/");
-    } catch (error) {
-      console.error(error);
-      setPerdoruesiData(null);
-      localStorage.clear();
-    }
-  };
 
   useEffect(() => {
     const fetchData = async () => {
