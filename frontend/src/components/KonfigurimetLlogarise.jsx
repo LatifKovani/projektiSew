@@ -40,6 +40,7 @@ function KonfigurimetLlogarise() {
           mbiemri: perdoruesiData.mbiemri,
           email: perdoruesiData.email,
           fjalekalimi: perdoruesiData.fjalekalimi,
+          nrTelefonit: perdoruesiData.nrTelefonit,
         };
       } else if (perdoruesiData.tipiPerdoruesit === "punedhenes") {
         dataToSend = {
@@ -47,6 +48,7 @@ function KonfigurimetLlogarise() {
           kompania: perdoruesiData.kompania,
           email: perdoruesiData.email,
           fjalekalimi: perdoruesiData.fjalekalimi,
+          nrTelefonit: perdoruesiData.nrTelefonit,
         };
       }
 
@@ -90,8 +92,13 @@ function KonfigurimetLlogarise() {
           onChange={modifikoProfilin}
         />
         <input id="fjalekalimi" type="text" className="border" />
-        <label htmlFor=""></label>
-        <input type="text" />
+        <label htmlFor="">Numri</label>
+        <input
+          id="nrTelefonit"
+          type="text"
+          className="border"
+          onChange={modifikoProfilin}
+        />
         <button type="submit" className="publikoPune">
           Perfundo
         </button>
