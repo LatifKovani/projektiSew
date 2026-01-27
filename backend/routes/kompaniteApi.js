@@ -18,6 +18,7 @@ router.get("/kompanite", async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
 router.get("/:id", async (req, res) => {
   try {
     const id = req.params.id;
@@ -36,4 +37,6 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+=======
+>>>>>>> 4176ce8 (test)
 module.exports = router;

@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import Header from "./Header";
 import axios from "axios";
+<<<<<<< HEAD
 import KompaniaCard from "./KompaniaCard";
+=======
+>>>>>>> 4176ce8 (test)
 
 function ListaKompanive() {
   const [kompanite, setKompanite] = useState([]);
@@ -28,11 +31,22 @@ function ListaKompanive() {
   return (
     <div>
       <Header />
+<<<<<<< HEAD
       <div className="kompaniaCard">
         {kompanite.map((k) => {
           return <KompaniaCard key={k._id} kompania={k} />;
         })}
       </div>
+=======
+      {kompanite.map((k) => {
+        return (
+          <div key={k._id} className="border">
+            <p>{k.kompania}</p>
+            <p>{k.email}</p>
+          </div>
+        );
+      })}
+>>>>>>> 4176ce8 (test)
     </div>
   );
 }

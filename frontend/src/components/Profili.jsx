@@ -3,12 +3,17 @@ import "../index.css";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Header from "./Header";
+<<<<<<< HEAD
 import { Mail, Phone, Plus, Edit2, Upload, Link, X } from "lucide-react";
+=======
+import { Mail, Phone } from "lucide-react";
+>>>>>>> 4176ce8 (test)
 
 function Profili() {
   const navigate = useNavigate();
   const [perdoruesiData, setPerdoruesiData] = useState({});
   const { id } = useParams();
+<<<<<<< HEAD
   const [linkeSociale, setLinkeSociale] = useState([]);
   const [shfaqLinkeForm, setShfaqLinkeForm] = useState(false);
   const [eksperienca, setEksperienca] = useState([]);
@@ -17,6 +22,8 @@ function Profili() {
   const [shfaqFormenEdukimi, setShfaqFormenEdukimi] = useState(false);
   const [projektet, setProjektet] = useState([]);
   const [shfaqFormenProjektet, setShfaqFormenProjektet] = useState(false);
+=======
+>>>>>>> 4176ce8 (test)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,6 +70,7 @@ function Profili() {
     return "?";
   };
 
+<<<<<<< HEAD
   // Linki i ri
   const [linkRi, setLinkRi] = useState({
     platforma: "",
@@ -164,10 +172,13 @@ function Profili() {
   const handleFshijProjektin = (id) => {
     setProjektet(projektet.filter((proj) => proj.id !== id));
   };
+=======
+>>>>>>> 4176ce8 (test)
   return (
     <div className="min-h-screen bg-gray-100">
       <Header perdoruesiData={perdoruesiData} onCkycja={handleCkycja} />
 
+<<<<<<< HEAD
       <div className="max-w-4xl mx-auto mb-2 mt-10">
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden mb-2">
           <div className="h-32 bg-white/30">
@@ -181,6 +192,11 @@ function Profili() {
               </button>
             </div>
           </div>
+=======
+      <div className="max-w-4xl mx-auto px-4 py-8">
+        <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+          <div className="h-32 bg-white/30 "></div>
+>>>>>>> 4176ce8 (test)
 
           <div className="px-8 pb-8">
             <div className="flex flex-col sm:flex-row items-center sm:items-end -mt-16 mb-6">
@@ -188,6 +204,7 @@ function Profili() {
                 {getInitials()}
               </div>
 
+<<<<<<< HEAD
               <div className="mt-4 sm:mt-0 sm:ml-6 text-center sm:text-left flex-1 relative">
                 <h1 className="text-left text-3xl mb-1">
                   {perdoruesiData?.emri || perdoruesiData?.kompania}{" "}
@@ -683,6 +700,30 @@ function Profili() {
                 )}
               </div>
             </div>
+=======
+              <div className="mt-4 sm:mt-0 sm:ml-6 text-center sm:text-left flex-1">
+                <h1 className="text-3xl font-bold text-gray-900 mb-1">
+                  {perdoruesiData?.emri || perdoruesiData?.kompania}{" "}
+                  {perdoruesiData?.mbiemri}
+                </h1>
+
+                <p className="text-gray-600 flex items-center justify-center sm:justify-start gap-2 mt-4">
+                  <Mail size={16} />
+                  {perdoruesiData.email}
+                </p>
+                <p className="text-gray-600 flex items-center justify-center sm:justify-start gap-2">
+                  <Phone size={16} />
+                  {perdoruesiData.nrTelefonit}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="flex justify-between px-4 py-2">
+            <h1 className="text-2xl font-semibold text-gray-900 mb-1">
+              Pervoja e Punes
+            </h1>
+            <button className="publikoPune">Shto</button>
+>>>>>>> 4176ce8 (test)
           </div>
         </div>
       </div>

@@ -57,8 +57,17 @@ function Regjistrimi() {
 
       if (response.data.success) {
         alert(response.data.message);
+<<<<<<< HEAD
 
         if (tipiPerdoruesit === "aplikant") {
+=======
+<<<<<<< HEAD
+                if (tipiPerdoruesit === "aplikant") {
+=======
+
+        if (tipiPerdoruesit === "aplikant") {
+>>>>>>> upstream/master
+>>>>>>> 4176ce8 (test)
           localStorage.setItem("emailForVerification", dataAplikant.email);
         } else if (tipiPerdoruesit === "punedhenes") {
           localStorage.setItem("emailForVerification", dataPunedhenesi.email);
@@ -76,7 +85,11 @@ function Regjistrimi() {
   return (
     <div className="flex justify-center items-center min-h-screen p-4">
       <div
+<<<<<<< HEAD
         className="w-full max-w-162.5
+=======
+        className="w-full max-w-[650px]
+>>>>>>> 4176ce8 (test)
                 bg-white rounded-lg shadow-2xl 
                 p-4 sm:p-6 md:p-8 lg:p-10"
       >
@@ -99,7 +112,16 @@ function Regjistrimi() {
                   required
                   onChange={(e) => setTipiPerdoruesit(e.target.value)}
                 />
+<<<<<<< HEAD
                 <label htmlFor="aplikant" className="labelRegjistrimi">
+=======
+                <label
+                  htmlFor="aplikant"
+                  className="flex items-center justify-center p-3 border border-[#f7f7f7] rounded-lg cursor-pointer 
+                 bg-[#f7f7f7] transition-all duration-200
+                 peer-checked:border-[#6a6a6a] peer-checked:font-semibold"
+                >
+>>>>>>> 4176ce8 (test)
                   <span className="text-sm sm:text-base">Aplikant</span>
                 </label>
               </div>
@@ -114,7 +136,16 @@ function Regjistrimi() {
                   required
                   onChange={(e) => setTipiPerdoruesit(e.target.value)}
                 />
+<<<<<<< HEAD
                 <label htmlFor="punedhenes" className="labelRegjistrimi">
+=======
+                <label
+                  htmlFor="punedhenes"
+                  className="flex items-center justify-center p-3 border border-[#f7f7f7] rounded-lg cursor-pointer 
+                 bg-[#f7f7f7] transition-all duration-200
+                 peer-checked:border-[#6a6a6a] peer-checked:font-semibold"
+                >
+>>>>>>> 4176ce8 (test)
                   <span className="text-sm sm:text-base">Punëdhënës</span>
                 </label>
               </div>
@@ -172,7 +203,11 @@ function Regjistrimi() {
                     id={field.id}
                     type={field.type}
                     placeholder={field.placeholder}
+<<<<<<< HEAD
                     className="border-inputbg bg-inputbg rounded-sm p-2 sm:p-3 w-full h-10 sm:h-12 placeholder-gray-500"
+=======
+                    className="border-[#f7f7f7] bg-[#f7f7f7] rounded-sm p-2 sm:p-3 w-full h-10 sm:h-12 placeholder-gray-500"
+>>>>>>> 4176ce8 (test)
                     onChange={(e) =>
                       setDataAplikant({
                         ...dataAplikant,
@@ -234,7 +269,11 @@ function Regjistrimi() {
                     id={field.id}
                     type={field.type}
                     placeholder={field.placeholder}
+<<<<<<< HEAD
                     className="border-inputbg bg-inputbg rounded-sm p-2 sm:p-3 w-full h-10 sm:h-12 placeholder-gray-500"
+=======
+                    className="border-[#f7f7f7] bg-[#f7f7f7] rounded-sm p-2 sm:p-3 w-full h-10 sm:h-12 placeholder-gray-500"
+>>>>>>> 4176ce8 (test)
                     onChange={(e) =>
                       setDataPunedhenesi({
                         ...dataPunedhenesi,

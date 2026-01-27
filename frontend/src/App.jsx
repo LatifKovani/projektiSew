@@ -17,11 +17,15 @@ import KonfigurimetLlogarise from "./components/KonfigurimetLlogarise";
 import BallinaMysafir from "./components/BallinaMysafir";
 import Perdoruesi from "./PerdoruesiContext";
 import MenaxhoAplikimet from "./components/MenaxhoAplikimet";
+<<<<<<< HEAD
 import PunetRuajtura from "./components/PunetRuajtura";
 import { useEffect, useState } from "react";
 import ProfiliVizitor from "./components/ProfiliVizitor";
 import LlogaritPagen from "./components/LlogaritPagen";
 import ProfiliAplikantit from "./components/ProfiliAplikantit";
+=======
+import { useEffect, useState } from "react";
+>>>>>>> 4176ce8 (test)
 
 function App() {
   const { perdoruesiData } = Perdoruesi.usePerdoruesi();
@@ -61,11 +65,17 @@ function App() {
             <Route path="/rrethNesh" element={<RrethNesh />} />
             <Route path="/kycja" element={<Kycja />} />
             <Route path="/regjistrimi" element={<Regjistrimi />} />
+<<<<<<< HEAD
             <Route path="/publikopune" element={<PublikoPune />} />
             <Route path="/kycja" element={<Kycja />} />
             <Route path="/shpallja/:id" element={<Shpallja />} />
             <Route path="/profili/:id" element={<Profili />} />
             <Route path="/profiliaplikanteve" element={<ProfiliAplikantit />} />
+=======
+            <Route path="/publikoPune" element={<PublikoPune />} />
+            <Route path="/shpallja/:id" element={<Shpallja />} />
+            <Route path="/profili/:id" element={<Profili />} />
+>>>>>>> 4176ce8 (test)
             <Route
               path="/profili/:id/menaxhoShpalljet"
               element={<MenaxhoShpalljet />}
@@ -74,12 +84,17 @@ function App() {
               path="/profili/:id/menaxhoAplikimet"
               element={<MenaxhoAplikimet />}
             />
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4176ce8 (test)
             <Route
               path="/profili/:id/konfigurimet"
               element={<KonfigurimetLlogarise />}
             />
             <Route path="/verifiko" element={<VerifikoEmail />} />
             <Route path=":id/aplikimi" element={<Aplikimi />} />
+<<<<<<< HEAD
             <Route
               path="/profili/:id/punetRuajtura"
               element={<PunetRuajtura />}
@@ -91,6 +106,12 @@ function App() {
         </div>
         <Footeri />
       </BrowserRouter>
+=======
+          </Routes>
+        </div>
+      </BrowserRouter>
+      <Footeri />
+>>>>>>> 4176ce8 (test)
     </div>
   );
 }

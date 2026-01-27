@@ -6,6 +6,7 @@ const aplikimiSchema = new mongoose.Schema({
     ref: "Shpallja",
     required: true,
   },
+<<<<<<< HEAD
   emriFileCv: {
     type: String,
     required: false,
@@ -26,6 +27,8 @@ const aplikimiSchema = new mongoose.Schema({
     type: Date,
     required: false,
   },
+=======
+>>>>>>> 4176ce8 (test)
   emailAplikantit: {
     type: String,
     required: true,
@@ -54,6 +57,7 @@ const aplikimiSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+<<<<<<< HEAD
   status: {
     type: String,
     default: "pending",
@@ -69,6 +73,8 @@ const aplikimiSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+=======
+>>>>>>> 4176ce8 (test)
 });
 
 const Aplikimi = mongoose.model("Aplikimi", aplikimiSchema, "aplikimet");

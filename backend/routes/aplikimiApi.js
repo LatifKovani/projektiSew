@@ -1,10 +1,14 @@
 const express = require("express");
 const router = express.Router();
+<<<<<<< HEAD
 const upload = require("../upload");
+=======
+>>>>>>> 4176ce8 (test)
 const Aplikimi = require("../models/aplikimiSchema");
 const Shpallja = require("../models/shpalljaSchema");
 const dergoMesazhin = require("../emailservice");
 
+<<<<<<< HEAD
 router.post("/:id/aplikimi", upload.single("cvFile"), async (req, res) => {
   try {
     if (!req.file) {
@@ -13,6 +17,10 @@ router.post("/:id/aplikimi", upload.single("cvFile"), async (req, res) => {
         message: "Ju lutem futni filen (PDF, DOC ose DOCX)",
       });
     }
+=======
+router.post("/:id/aplikimi", async (req, res) => {
+  try {
+>>>>>>> 4176ce8 (test)
     const {
       emailAplikantit,
       emriAplikantit,
@@ -36,10 +44,13 @@ router.post("/:id/aplikimi", upload.single("cvFile"), async (req, res) => {
       niveliPunes,
       nrTelefonit,
       letraMotivuese,
+<<<<<<< HEAD
       emriFileCv: req.file.originalname,
       mimetype: req.file.mimetype,
       filesize: req.file.size,
       data: req.file.buffer,
+=======
+>>>>>>> 4176ce8 (test)
     });
 
     await aplikimi.save();
@@ -55,6 +66,7 @@ router.post("/:id/aplikimi", upload.single("cvFile"), async (req, res) => {
     });
   } catch (error) {
     console.error(error);
+<<<<<<< HEAD
 
     if (error.code === "LIMIT_FILE_SIZE") {
       return res.status(400).json({
@@ -69,6 +81,8 @@ router.post("/:id/aplikimi", upload.single("cvFile"), async (req, res) => {
         error: error.message,
       });
     }
+=======
+>>>>>>> 4176ce8 (test)
     return res.status(500).json({
       success: false,
       error: "Gabim i brendshem i serverit",
@@ -123,6 +137,7 @@ router.get("/:shpalljaId/aplikimet", async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
 router.put("/aplikimi/:id", async (req, res) => {
   try {
     const aplikimi = await Aplikimi.findByIdAndUpdate(req.params.id, req.body, {
@@ -171,4 +186,6 @@ router.get("/:id/download", async (req, res) => {
   }
 });
 
+=======
+>>>>>>> 4176ce8 (test)
 module.exports = router;
