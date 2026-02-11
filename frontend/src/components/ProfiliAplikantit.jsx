@@ -18,18 +18,15 @@ function ProfiliAplikantit() {
   const { perdoruesiData, setPerdoruesiData } = Perdoruesi.usePerdoruesi();
   const { id } = useParams();
 
-  // States for showing/hiding forms
   const [shfaqLinkeForm, setShfaqLinkeForm] = useState(false);
   const [shfaqFormenEksperienca, setShfaqFormenEksperienca] = useState(false);
   const [shfaqFormenEdukimi, setShfaqFormenEdukimi] = useState(false);
   const [shfaqFormenProjektet, setShfaqFormenProjektet] = useState(false);
 
-  // Photo upload states
   const [fotoProfile, setFotoProfile] = useState(null);
   const [poNgarkohetFoto, setPoNgarkohetFoto] = useState(false);
   const inputFotoRef = useRef(null);
 
-  // Format date for display (DD-MM-YYYY)
   const formatDateDDMMYYYY = (dateString) => {
     if (!dateString) return "";
 
@@ -54,7 +51,6 @@ function ProfiliAplikantit() {
         );
         setPerdoruesiData(response.data.data);
 
-        // Ngarko foton e profile nese ekziston
         if (response.data.data.foto) {
           setFotoProfile(`http://localhost:3000/api/profili/${id}/foto`);
         }
@@ -67,7 +63,6 @@ function ProfiliAplikantit() {
     }
   }, [id]);
 
-  // Get initials for profile picture
   const merreShkronjatFillestare = () => {
     if (perdoruesiData?.emri && perdoruesiData?.mbiemri) {
       return `${perdoruesiData.emri[0]}${perdoruesiData.mbiemri[0]}`.toUpperCase();
@@ -77,7 +72,6 @@ function ProfiliAplikantit() {
     return "?";
   };
 
-  // ========== FOTO FUNCTIONS ==========
   const handleNgarkoFoto = async (event) => {
     const file = event.target.files[0];
     if (!file) return;
@@ -148,7 +142,6 @@ function ProfiliAplikantit() {
     }
   };
 
-  // ========== LINKS SECTION ==========
   const [linkRi, setLinkRi] = useState({
     platforma: "",
     linku: "",

@@ -103,6 +103,9 @@ const perdoruesSchema = new mongoose.Schema(
         linku: String,
       },
     ],
+    rrethKompanise: {
+      type: String,
+    },
   },
   {
     timestamps: true,
