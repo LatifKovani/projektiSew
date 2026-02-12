@@ -50,11 +50,10 @@ router.get("/kompania", async (req, res) => {
   try {
     const now = new Date();
     // const expiryTime = 2 * 60 * 1000;
-    const expiryTime = 30 * 24 * 60 * 60 * 1000;
-
+    const tridhjeteDite = 30 * 24 * 60 * 60 * 1000;
     const expiredJobs = await Shpallja.find({
       status: "aktiv",
-      dataKrijimit: { $lt: new Date(now - expiryTime) },
+      dataKrijimit: { $lt: new Date(now - tridhjeteDite) },
     });
 
     for (const shpallja of expiredJobs) {
