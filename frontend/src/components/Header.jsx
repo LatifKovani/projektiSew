@@ -111,16 +111,12 @@ function Header() {
       );
 
       setPerdoruesiData(null);
-      localStorage.removeItem("user");
-      localStorage.removeItem("token");
-
       console.log("Ckycja u be", response.data);
       closeDropdown();
-      navigate("/");
+      window.location.href = "/";
     } catch (error) {
       console.error(error);
       setPerdoruesiData(null);
-      localStorage.clear();
     }
   };
 
@@ -175,7 +171,7 @@ function Header() {
 
   return (
     <>
-      <div className="flex items-center justify-between w-full bg-transparent py-5 px-6 mx-auto text-base ">
+      <div className="flex items-center justify-between w-full bg-transparent py-5 px-6 mx-auto text-base">
         <Link to="/" className="flex items-center gap-3 mr-8 group">
           <div className="transform group-hover:scale-110 transition-all duration-300">
             <JobSearchIcon className="text-[#0F4C75] group-hover:text-[#3282B8] transition-colors duration-300" />
@@ -204,8 +200,18 @@ function Header() {
                   onClick={toggleDropdown}
                   className="flex items-center space-x-3 px-4 py-2.5 rounded-xl hover:bg-[#D6E6F2] transition-all duration-300  hover:shadow-sm group"
                 >
-                  <div className="w-9 h-9 rounded-full bg-linear-to-br from-[#0F4C75] to-[#3282B8] flex items-center justify-center shadow-md group-hover:shadow-lg group-hover:scale-105 transition-all duration-300">
-                    <User size={18} className="text-white" />
+                  <div className="w-9 h-9 rounded-full overflow-hidden flex items-center justify-center shadow-md group-hover:shadow-lg group-hover:scale-105 transition-all duration-300 bg-gray-200">
+                    {perdoruesiData?.foto ? (
+                      <img
+                        src={`http://localhost:3000/api/profili/${perdoruesiData._id}/foto`}
+                        alt="Profile"
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-[#0F4C75] to-[#3282B8] flex items-center justify-center">
+                        <User size={18} className="text-white" />
+                      </div>
+                    )}
                   </div>
                   <span className="text-zinc-700 font-semibold text-sm">
                     {perdoruesiData.tipiPerdoruesit === "punedhenes"
@@ -378,8 +384,18 @@ function Header() {
                   className="flex items-center justify-between w-full text-left py-3 px-4 hover:bg-gray-50 rounded-xl transition-all duration-200 group"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-linear-to-br from-[#0F4C75] to-[#3282B8] flex items-center justify-center shadow-md group-hover:shadow-lg group-hover:scale-105 transition-all duration-300">
-                      <User size={18} className="text-white" />
+                    <div className="w-9 h-9 rounded-full overflow-hidden flex items-center justify-center shadow-md group-hover:shadow-lg group-hover:scale-105 transition-all duration-300 bg-gray-200">
+                      {perdoruesiData?.foto ? (
+                        <img
+                          src={`http://localhost:3000/api/profili/${perdoruesiData._id}/foto`}
+                          alt="Profile"
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-[#0F4C75] to-[#3282B8] flex items-center justify-center">
+                          <User size={18} className="text-white" />
+                        </div>
+                      )}
                     </div>
                     <span className="font-semibold text-zinc-700">
                       {perdoruesiData.tipiPerdoruesit === "punedhenes"

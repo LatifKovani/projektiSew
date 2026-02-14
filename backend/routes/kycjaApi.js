@@ -25,6 +25,12 @@ router.post("/perdoruesi", async (req, res) => {
         email: perdoruesi.email,
         tipiPerdoruesit: perdoruesi.tipiPerdoruesit,
         aftesite: perdoruesi.aftesite,
+        foto: {
+          emriFoto: perdoruesi.foto.emriFoto,
+          mimetype: perdoruesi.foto.mimetype,
+          size: perdoruesi.foto.size,
+          uploadDate: perdoruesi.foto.uploadDate,
+        },
       };
     } else if (perdoruesi.tipiPerdoruesit === "punedhenes") {
       perdoruesiObj = {
@@ -32,6 +38,12 @@ router.post("/perdoruesi", async (req, res) => {
         kompania: perdoruesi.kompania,
         email: perdoruesi.email,
         tipiPerdoruesit: perdoruesi.tipiPerdoruesit,
+        foto: {
+          emriFoto: perdoruesi.foto.emriFoto,
+          mimetype: perdoruesi.foto.mimetype,
+          size: perdoruesi.foto.size,
+          uploadDate: perdoruesi.foto.uploadDate,
+        },
       };
     }
 
@@ -80,6 +92,12 @@ router.get("/perdoruesi", async (req, res) => {
         kompania: perdoruesi.kompania,
         tipiPerdoruesit: perdoruesi.tipiPerdoruesit,
         aftesite: perdoruesi.aftesite,
+        foto: {
+          emriFoto: perdoruesi.foto.emriFoto,
+          mimetype: perdoruesi.foto.mimetype,
+          size: perdoruesi.foto.size,
+          uploadDate: perdoruesi.foto.uploadDate,
+        },
       },
     });
   } catch (err) {

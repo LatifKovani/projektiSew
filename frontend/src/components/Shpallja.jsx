@@ -18,12 +18,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import Perdoruesi from "../PerdoruesiContext";
 
 function Shpallja() {
+  const { id } = useParams();
   const navigate = useNavigate();
   const [shpallja, setShpallja] = useState(null);
   const { perdoruesiData } = Perdoruesi.usePerdoruesi();
   const [eshteRuajtur, setEshteRuajtur] = useState(false);
   const [duke_ngarkuar, setDuke_ngarkuar] = useState(false);
   const [fotoError, setFotoError] = useState(false);
+  const [kaAplikuar, setKaAplikuar] = useState(false);
 
   const handlePhotoError = () => setFotoError(true);
 
@@ -31,8 +33,6 @@ function Shpallja() {
     if (!shpallja?.emailKompanise) return "COMPANY";
     return shpallja.emailKompanise.split("@")[0].toUpperCase();
   };
-
-  const { id } = useParams();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -67,6 +67,30 @@ function Shpallja() {
       }
     };
     kontrolloStatusin();
+  }, [id, perdoruesiData]);
+
+  useEffect(() => {
+    const kontrolloAplikimin = async () => {
+      if (
+        !perdoruesiData ||
+        perdoruesiData.tipiPerdoruesit === "punedhenes" ||
+        !id
+      ) {
+        return;
+      }
+
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/api/shpallja/ka-aplikuar/${id}`,
+          { withCredentials: true },
+        );
+        setKaAplikuar(response.data.kaAplikuar);
+      } catch (error) {
+        console.error("Gabim gjatë kontrollit të aplikimit:", error);
+      }
+    };
+
+    kontrolloAplikimin();
   }, [id, perdoruesiData]);
 
   const ndryshoRuajtjen = async () => {
@@ -420,15 +444,25 @@ function Shpallja() {
                   </div>
                 )}
 
-                {/* ✅ YOUR BUTTON – exactly as in the second version, no blue button */}
                 {perdoruesiData?.tipiPerdoruesit !== "punedhenes" && (
-                  <button
-                    onClick={aplikoTani}
-                    className="publikoPune w-full mt-3"
-                  >
-                    Apliko
-                    <FontAwesomeIcon icon={faArrowRight} className="text-sm" />
-                  </button>
+                  <>
+                    {kaAplikuar ? (
+                      <div className="w-full mt-3 p-3 bg-green-50 border border-green-200 text-green-700 rounded-lg text-center font-medium">
+                        Keni aplikuar tashmë
+                      </div>
+                    ) : (
+                      <button
+                        onClick={aplikoTani}
+                        className="publikoPune w-full mt-3"
+                      >
+                        Apliko
+                        <FontAwesomeIcon
+                          icon={faArrowRight}
+                          className="text-sm"
+                        />
+                      </button>
+                    )}
+                  </>
                 )}
               </div>
             </div>

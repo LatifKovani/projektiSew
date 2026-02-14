@@ -5,9 +5,11 @@ import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan, faPlus } from "@fortawesome/free-solid-svg-icons";
 import Header from "./Header";
+import { useAlert } from "../contexts/AlertContext";
 
 function PublikoPune() {
   const navigate = useNavigate();
+  const { showAlert } = useAlert();
   const [aftesitePrimare, setAftesitePrimare] = useState([]);
   const [aftesiaPrimareTanishme, setAftesiaPrimareTanishme] = useState("");
   const [aftesiteSekondare, setAftesiteSekondare] = useState([]);
@@ -119,7 +121,7 @@ function PublikoPune() {
     };
 
     if (dataToSend.pagaDeri < dataToSend.pagaPrej) {
-      alert("Rangu i pages eshte gabim!");
+      showAlert("Rangu i pages eshte gabim!", "info");
       return;
     }
 
@@ -129,7 +131,7 @@ function PublikoPune() {
     );
 
     if (response.data.success) {
-      alert("Puna u shpall");
+      showAlert("Puna u shpall", "success");
 
       setFormData({
         emailKompanise: "",
@@ -157,7 +159,7 @@ function PublikoPune() {
 
   return (
     <div className="min-h-screen">
-      <div className="bg-linear-to-br from-[#F7FBFC] via-[#D6E6F2] to-[#B9D7EA] pb-32 relative overflow-hidden">
+      <div className="bg-linear-to-br from-[#F7FBFC] via-[#D6E6F2] to-[#B9D7EA] pb-32 relative ">
         <Header />
 
         <div className="text-center relative z-10">
