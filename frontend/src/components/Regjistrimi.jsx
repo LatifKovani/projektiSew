@@ -189,7 +189,7 @@ function Regjistrimi() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen p-4">
+    <div className="flex justify-center items-center min-h-screen p-4 bg-linear-to-br from-[#F7FBFC] to-[#B9D7EA] pb-10  shadow-[#0F4C75]">
       <div
         className="w-full max-w-162.5
                 bg-white rounded-lg shadow-2xl 
@@ -401,23 +401,23 @@ function Regjistrimi() {
             </form>
           </div>
 
-          <div className="text-center text-sm sm:text-base">
-            <p className="inline">Keni Llogari? </p>
-            <Link
-              to="/kycja"
-              className="text-blue-600 underline hover:text-blue-800"
-            >
-              Kycuni
-            </Link>
-          </div>
-
-          <div className="text-center">
+          <div className="grid grid-cols-2 gap-3 items-end">
             <Link
               to="/"
-              className="text-blue-600 underline text-sm sm:text-base hover:text-blue-800"
+              className="h-10 sm:h-12 bg-gray-100 text-gray-700 rounded-lg font-medium hover:bg-gray-200 transition-all flex items-center justify-center"
             >
-              Ballina
+              ← Ballina
             </Link>
+            
+            <div className="grid gap-1">
+               <p className="text-center text-sm  text-gray-600">Keni Llogari?</p>
+              <Link
+                to="/kycja"
+                className="h-10 sm:h-12 bg-gray-100 text-gray-700 rounded-lg font-medium hover:bg-gray-200 transition-all flex items-center justify-center"
+              >
+                Kycuni
+              </Link>
+            </div>
           </div>
         </div>
       </div>
