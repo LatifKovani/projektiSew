@@ -1094,7 +1094,7 @@ function MenaxhoShpalljet() {
                           </div>
                           <button
                             type="button"
-                            className="grid place-self-center publikoPune ml-4 sm:ml-0 sm:mt-0 mt-3 max-w-xs"
+                            className="grid place-self-center publikoPune ml-4 sm:ml-0 sm:mt-0 mt-3 w-fit"
                             onClick={() => hapAplikimin(a)}
                           >
                             Shiko Me Shume
@@ -1186,7 +1186,7 @@ function MenaxhoShpalljet() {
                           </div>
                           <button
                             type="button"
-                            className="grid place-self-center publikoPune ml-4 sm:ml-0 sm:mt-0 mt-3"
+                            className="grid place-self-center publikoPune ml-4 sm:ml-0 sm:mt-0 mt-3 w-fit"
                             onClick={() => hapAplikimin(a)}
                           >
                             Shiko Me Shume
@@ -1278,7 +1278,7 @@ function MenaxhoShpalljet() {
                           </div>
                           <button
                             type="button"
-                            className="grid place-self-center publikoPune ml-4 sm:ml-0 sm:mt-0 mt-3"
+                            className="grid place-self-center publikoPune ml-4 sm:ml-0 sm:mt-0 mt-3 w-fit"
                             onClick={() => hapAplikimin(a)}
                           >
                             Shiko Me Shume
