@@ -2,6 +2,7 @@ import Header from "./Header";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useNavigate } from "react-router-dom";
 import {
   ArrowDownWideNarrow,
   Mail,
@@ -27,6 +28,7 @@ import Perdoruesi from "../PerdoruesiContext";
 
 function MenaxhoShpalljet() {
   const { showAlert } = useAlert();
+  const navigate = useNavigate();
   const { perdoruesiData } = Perdoruesi.usePerdoruesi();
   const [shpalljaData, setShpalljaData] = useState([]);
   const [shpalljaKlikuar, setShpalljaKlikuar] = useState(null);
@@ -47,7 +49,7 @@ function MenaxhoShpalljet() {
   const [shfaqPopupRefuzuar, setShfaqPopupRefuzuar] = useState(false);
 
   const [fotoAplikanteve, setFotoAplikanteve] = useState({});
-  const [confirmDelete, setConfirmDelete] = useState(null); // For custom confirmation modal
+  const [confirmDelete, setConfirmDelete] = useState(null);
 
   const fetchShpalljet = async () => {
     try {
@@ -145,7 +147,6 @@ function MenaxhoShpalljet() {
   };
 
   const fshijShpalljen = async (idShpallja) => {
-    // Show custom confirmation modal
     setConfirmDelete(idShpallja);
   };
 
@@ -173,7 +174,6 @@ function MenaxhoShpalljet() {
   const ruajNdryshimet = async (e) => {
     e.preventDefault();
 
-    // Validation
     if (!shpalljaKlikuar.pozitaPunes?.trim()) {
       showAlert("Ju lutem shkruani pozitën e punës", "warning");
       return;
@@ -189,7 +189,6 @@ function MenaxhoShpalljet() {
       return;
     }
 
-    // Check if primary skills have empty entries
     const hasEmptyPrimarySkills = shpalljaKlikuar.aftesitePrimare?.some(
       (skill) => !skill.trim(),
     );
@@ -201,7 +200,6 @@ function MenaxhoShpalljet() {
       return;
     }
 
-    // Check if secondary skills have empty entries
     const hasEmptySecondarySkills = shpalljaKlikuar.aftesiteSekondare?.some(
       (skill) => !skill.trim(),
     );
@@ -232,6 +230,20 @@ function MenaxhoShpalljet() {
     } finally {
       setIsSaving(false);
     }
+  };
+
+  const getExpirationDate = (creationDate) => {
+    const date = new Date(creationDate);
+    date.setDate(date.getDate() + 30);
+    return date;
+  };
+
+  const formatDate = (date) => {
+    return new Date(date).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
   };
 
   const ruajNdryshimetAplikimit = async (e) => {
@@ -356,6 +368,46 @@ function MenaxhoShpalljet() {
     }
   };
 
+  if (perdoruesiData?.tipiPerdoruesit !== "punedhenes") {
+    return (
+      <div className="min-h-screen">
+        <Header withGradient={true} />
+        <div className="flex flex-col items-center justify-center min-h-[80vh] px-4">
+          <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12 max-w-md text-center">
+            <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg
+                className="w-8 h-8 text-yellow-500"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+            </div>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">
+              Qasje e ndaluar
+            </h2>
+            <p className="text-gray-600 mb-6">
+              Vetëm punëdhënësit mund të menaxhojnë shpalljet. Nëse jeni
+              punëdhënës, ju lutemi kycuni/regjistrohuni si i tillë.
+            </p>
+            <a
+              href="/kycja"
+              className="inline-block px-6 py-3 bg-gradient-to-r from-[#0F4C75] to-[#3282B8] text-white rounded-lg font-semibold hover:from-[#3282B8] hover:to-[#0F4C75] transition-all duration-300"
+            >
+              Kycu
+            </a>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="bg-white min-h-screen">
       <Header withGradient={true} />
@@ -458,7 +510,11 @@ function MenaxhoShpalljet() {
               <thead className="bg-gray-50">
                 <tr>
                   <th className="tableHead">Pozita</th>
-                  <th className="tableHead">Data e Publikimit</th>
+                  {filtrimiFaqes === "Aktive" && (
+                    <th className="tableHead">Data e Publikimit</th>
+                  )}
+                  <th className="tableHead">Data e Skadimit</th>
+
                   <th className="tableHead">Lokacioni</th>
                   <th className="tableHead text-center">Orari</th>
 
@@ -475,104 +531,134 @@ function MenaxhoShpalljet() {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {filteredData.map((sh) => (
-                  <tr key={sh._id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4">
-                      <div className="text-sm font-medium text-gray-900">
-                        {sh.pozitaPunes}
-                      </div>
-                      <div className="text-sm text-gray-500">
-                        {sh.kategoriaPunes}
-                      </div>
-                    </td>
-                    <td className="tableData text-gray-500">
-                      {new Date(sh.dataKrijimit).toLocaleDateString("en-US", {
-                        month: "short",
-                        day: "numeric",
-                        year: "numeric",
-                      })}
-                    </td>
-                    <td className="tableData text-gray-900">
-                      {sh.lokacioniPunes}
-                    </td>
-                    <td className="tableData">
-                      <span className="py-1 w-full items-center justify-center inline-flex text-sm font-medium">
-                        {sh.orari}
-                      </span>
-                    </td>
-                    <td className="tableData">
-                      <button
-                        onClick={(e) => shfaqAplikantPopup(e, sh)}
-                        className="text-sm text-indigo-600 hover:text-indigo-900 font-medium"
-                      >
-                        {sh.numriNePritje} aplikant
-                      </button>
-                    </td>
-                    {filtrimiFaqes !== "Aktive" && (
-                      <>
-                        <td className="tableData">
-                          <button
-                            onClick={(e) => shfaqAplikantPranuar(e, sh)}
-                            className="text-sm text-indigo-600 hover:text-indigo-900 font-medium"
-                          >
-                            {sh.numriPranuar} aplikant
-                          </button>
+                {filteredData.map((sh) => {
+                  const expirationDate = sh?.dataKrijimit
+                    ? getExpirationDate(sh?.dataKrijimit)
+                    : null;
+                  const isExpired = sh?.status?.toLowerCase() === "skaduar";
+
+                  // Add the return statement here
+                  return (
+                    <tr key={sh._id} className="hover:bg-gray-50">
+                      <td className="px-6 py-4">
+                        <div className="text-sm font-medium text-gray-900">
+                          {sh.pozitaPunes}
+                        </div>
+                        <div className="text-sm text-gray-500">
+                          {sh.kategoriaPunes}
+                        </div>
+                      </td>
+                      {!isExpired && (
+                        <td className="tableData text-gray-500">
+                          {new Date(sh.dataKrijimit).toLocaleDateString(
+                            "en-US",
+                            {
+                              month: "short",
+                              day: "numeric",
+                              year: "numeric",
+                            },
+                          )}
                         </td>
-                        <td className="tableData">
-                          <button
-                            onClick={(e) => shfaqAplikantRefuzuar(e, sh)}
-                            className="text-sm text-indigo-600 hover:text-indigo-900 font-medium"
+                      )}
+                      <td className="tableData">
+                        {expirationDate && (
+                          <span
+                            className={
+                              isExpired
+                                ? "text-red-600 font-medium"
+                                : "text-gray-500"
+                            }
                           >
-                            {sh.numriRefuzuar} aplikant
-                          </button>
-                        </td>
-                      </>
-                    )}
-                    <td className="tableData text-right text-sm font-medium">
-                      <div className="relative">
-                        <button
-                          onClick={() =>
-                            setShfaqMeny(shfaqMeny === sh._id ? null : sh._id)
-                          }
-                          className="text-gray-400 hover:text-gray-600 p-2"
-                        >
-                          <FontAwesomeIcon icon={faEllipsisVertical} />
-                        </button>
-                        {shfaqMeny === sh._id && (
-                          <div className="absolute right-6  top-0 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-10">
-                            <button
-                              onClick={() => {
-                                setShpalljaKlikuar({
-                                  ...sh,
-                                  aftesitePrimare: sh.aftesitePrimare || [],
-                                  aftesiteSekondare: sh.aftesiteSekondare || [],
-                                });
-                                setShfaqMeny(null);
-                              }}
-                              className="butonModifikimi"
-                            >
-                              <FontAwesomeIcon
-                                icon={faPencil}
-                                className="text-sm"
-                              />
-                              <span>Modifiko</span>
-                            </button>
-                            <button
-                              onClick={() => fshijShpalljen(sh._id)}
-                              className="butonModifikimi text-red-600 "
-                            >
-                              <FontAwesomeIcon
-                                icon={faTrash}
-                                className="text-sm"
-                              />
-                              <span>Fshij</span>
-                            </button>
-                          </div>
+                            {formatDate(expirationDate)}
+                          </span>
                         )}
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                      </td>
+
+                      <td className="tableData text-gray-900">
+                        {sh.lokacioniPunes}
+                      </td>
+                      <td className="tableData">
+                        <span className="py-1 w-full items-center justify-center inline-flex text-sm font-medium">
+                          {sh.orari}
+                        </span>
+                      </td>
+                      <td className="tableData">
+                        <button
+                          onClick={(e) => shfaqAplikantPopup(e, sh)}
+                          className="text-sm text-indigo-600 hover:text-indigo-900 font-medium"
+                        >
+                          {sh.numriNePritje} aplikant
+                        </button>
+                      </td>
+                      {filtrimiFaqes !== "Aktive" && (
+                        <>
+                          <td className="tableData">
+                            <button
+                              onClick={(e) => shfaqAplikantPranuar(e, sh)}
+                              className="text-sm text-indigo-600 hover:text-indigo-900 font-medium"
+                            >
+                              {sh.numriPranuar} aplikant
+                            </button>
+                          </td>
+                          <td className="tableData">
+                            <button
+                              onClick={(e) => shfaqAplikantRefuzuar(e, sh)}
+                              className="text-sm text-indigo-600 hover:text-indigo-900 font-medium"
+                            >
+                              {sh.numriRefuzuar} aplikant
+                            </button>
+                          </td>
+                        </>
+                      )}
+                      <td className="tableData text-right text-sm font-medium">
+                        <div className="relative">
+                          <button
+                            onClick={() =>
+                              setShfaqMeny(shfaqMeny === sh._id ? null : sh._id)
+                            }
+                            className="text-gray-400 hover:text-gray-600 p-2"
+                          >
+                            <FontAwesomeIcon icon={faEllipsisVertical} />
+                          </button>
+                          {shfaqMeny === sh._id && (
+                            <div className="absolute right-6  top-0 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-10">
+                              {!isExpired && (
+                                <button
+                                  onClick={() => {
+                                    setShpalljaKlikuar({
+                                      ...sh,
+                                      aftesitePrimare: sh.aftesitePrimare || [],
+                                      aftesiteSekondare:
+                                        sh.aftesiteSekondare || [],
+                                    });
+                                    setShfaqMeny(null);
+                                  }}
+                                  className="butonModifikimi"
+                                >
+                                  <FontAwesomeIcon
+                                    icon={faPencil}
+                                    className="text-sm"
+                                  />
+                                  <span>Modifiko</span>
+                                </button>
+                              )}
+                              <button
+                                onClick={() => fshijShpalljen(sh._id)}
+                                className="butonModifikimi text-red-600 "
+                              >
+                                <FontAwesomeIcon
+                                  icon={faTrash}
+                                  className="text-sm"
+                                />
+                                <span>Fshij</span>
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
@@ -919,7 +1005,6 @@ function MenaxhoShpalljet() {
         </div>
       )}
 
-      {/* Applicant Popups - Keeping original structure for brevity */}
       {shfaqPopupAplikanteve && shpalljaZgjedhurPerAplikante && (
         <div className="fixed bg-black/20 inset-0 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-lg w-full max-w-5xl max-h-[90vh] overflow-y-auto shadow-xl">
@@ -969,7 +1054,7 @@ function MenaxhoShpalljet() {
                         className="rounded-lg p-4 hover:bg-gray-50 hover:shadow-xl transition-all duration-300 group"
                       >
                         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
-                          <div className="flex items-start gap-4">
+                          <div className="flex items-start gap-4 cursor-pointer">
                             <div className="relative">
                               <div className="w-16 h-16 rounded-2xl bg-blue-100 flex items-center justify-center font-bold text-xl shadow-lg group-hover:scale-110 transition-transform overflow-hidden">
                                 {fotoAplikanteve[a.emailAplikantit] ? (
@@ -1009,7 +1094,7 @@ function MenaxhoShpalljet() {
                           </div>
                           <button
                             type="button"
-                            className="grid place-self-center publikoPune ml-4 sm:ml-0 sm:mt-0 mt-3"
+                            className="grid place-self-center publikoPune ml-4 sm:ml-0 sm:mt-0 mt-3 max-w-xs"
                             onClick={() => hapAplikimin(a)}
                           >
                             Shiko Me Shume
@@ -1024,10 +1109,8 @@ function MenaxhoShpalljet() {
         </div>
       )}
 
-      {/* Similar structure for Accepted and Rejected popups - keeping original for brevity */}
       {shfaqPopupPranuar && shpalljaZgjedhurPerAplikante && (
         <div className="fixed bg-black/20 inset-0 flex items-center justify-center z-50 p-4">
-          {/* Same structure as above but filtered by "Pranuar" status */}
           <div className="bg-white rounded-lg w-full max-w-5xl max-h-[90vh] overflow-y-auto shadow-xl">
             <div>
               <div className="bg-[#f8f8f9] p-6 sticky top-0 flex items-start justify-between">
@@ -1193,7 +1276,14 @@ function MenaxhoShpalljet() {
           <div className="bg-white rounded-2xl w-full max-w-2xl shadow-2xl max-h-[90vh] flex flex-col animate-in slide-in-from-bottom-4 duration-300">
             <div className="relative px-6 py-6 rounded-t-2xl">
               <div className="flex items-start justify-between">
-                <div className="flex items-center gap-4">
+                <div
+                  className="flex items-center gap-4 cursor-pointer"
+                  onClick={() =>
+                    navigate(
+                      `/profiliAplikantit/${aplikimiKlikuar.aplikantiId}`,
+                    )
+                  }
+                >
                   <div className="w-16 h-16 rounded-2xl bg-blue-100 flex items-center justify-center font-bold text-xl shadow-lg overflow-hidden flex-shrink-0">
                     {fotoAplikanteve[aplikimiKlikuar.emailAplikantit] ? (
                       <img
@@ -1412,7 +1502,6 @@ function MenaxhoShpalljet() {
         </div>
       )}
 
-      {/* Custom Delete Confirmation Modal */}
       {confirmDelete && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 animate-in zoom-in-95 duration-200">

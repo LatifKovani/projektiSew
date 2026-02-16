@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -23,6 +24,7 @@ function MenaxhoAplikimet() {
   const { perdoruesiData } = Perdoruesi.usePerdoruesi();
   const [shpalljaData, setShpalljaData] = useState([]);
   const [aplikimet, setAplikimet] = useState([]);
+  const navigate = useNavigate();
   const [aplikimiKlikuar, setAplikimiKlikuar] = useState(null);
   const [filtrimiFaqes, setFiltrimiFaqes] = useState("Aktive");
   const [kerko, setKerko] = useState("");
@@ -131,7 +133,6 @@ function MenaxhoAplikimet() {
   const ruajNdryshimet = async (e) => {
     e.preventDefault();
 
-    // Validation
     if (!aplikimiKlikuar.emriAplikantit?.trim()) {
       showAlert("Ju lutem shkruani emrin", "warning");
       return;
@@ -241,6 +242,46 @@ function MenaxhoAplikimet() {
       return matchesSearch;
     }),
   );
+
+  if (perdoruesiData?.tipiPerdoruesit !== "aplikant") {
+    return (
+      <div className="min-h-screen">
+        <Header withGradient={true} />
+        <div className="flex flex-col items-center justify-center min-h-[80vh] px-4">
+          <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12 max-w-md text-center">
+            <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg
+                className="w-8 h-8 text-yellow-500"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+            </div>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">
+              Qasje e ndaluar
+            </h2>
+            <p className="text-gray-600 mb-6">
+              Vetëm aplikantët mund të menaxhojnë aplikimet. Nëse jeni aplikant,
+              ju lutemi kycuni/regjistrohuni si i tillë.
+            </p>
+            <a
+              href="/kycja"
+              className="inline-block px-6 py-3 bg-gradient-to-r from-[#0F4C75] to-[#3282B8] text-white rounded-lg font-semibold hover:from-[#3282B8] hover:to-[#0F4C75] transition-all duration-300"
+            >
+              Kycu
+            </a>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-white min-h-screen">
@@ -367,7 +408,12 @@ function MenaxhoAplikimet() {
 
                   return (
                     <tr key={aplikimi._id} className="hover:bg-gray-50">
-                      <td className="px-6 py-4">
+                      <td
+                        className="px-6 py-4 cursor-pointer"
+                        onClick={() =>
+                          navigate(`/shpallja/${aplikimi.shpalljaId}`)
+                        }
+                      >
                         <div className="text-sm font-medium text-gray-900">
                           {shpallja?.pozitaPunes || "N/A"}
                         </div>
@@ -471,7 +517,6 @@ function MenaxhoAplikimet() {
             </table>
           </div>
 
-          {/* Mobile responsive section */}
           <div className="lg:hidden divide-y divide-gray-200">
             {filteredData.map((aplikimi) => {
               const shpallja = shpalljaData.find(

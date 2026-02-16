@@ -7,7 +7,6 @@ import Header from "./Header";
 function PunetRuajtura() {
   const [shpalljetRuajtura, setShpalljetRuajtura] = useState([]);
   const [duke_ngarkuar, setDuke_ngarkuar] = useState(true);
-  const [gabim, setGabim] = useState(null);
   const { perdoruesiData } = Perdoruesi.usePerdoruesi();
 
   useEffect(() => {
@@ -25,7 +24,6 @@ function PunetRuajtura() {
       }
     } catch (error) {
       console.error("Gabim gjatë marrjes së shpalljeve të ruajtura:", error);
-      setGabim("Gabim gjatë ngarkimit të shpalljeve të ruajtura");
     } finally {
       setDuke_ngarkuar(false);
     }
@@ -46,11 +44,41 @@ function PunetRuajtura() {
     );
   }
 
-  if (gabim) {
+  if (perdoruesiData?.tipiPerdoruesit !== "aplikant") {
     return (
-      <div className="min-h-screen bg-linear-to-br from-red-50 via-white to-red-100 flex items-center justify-center px-4">
-        <div className="w-full max-w-md backdrop-blur-xl bg-white/80 border border-red-100 shadow-2xl rounded-[28px] p-10 text-center">
-          <p className="text-xl font-semibold text-red-600">{gabim}</p>
+      <div className="min-h-screen">
+        <Header withGradient={true} />
+        <div className="flex flex-col items-center justify-center min-h-[80vh] px-4">
+          <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12 max-w-md text-center">
+            <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg
+                className="w-8 h-8 text-yellow-500"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+            </div>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">
+              Qasje e ndaluar
+            </h2>
+            <p className="text-gray-600 mb-6">
+              Vetëm aplikantët mund të ruajnë punë. Nëse jeni aplikant, ju
+              lutemi kycuni/regjistrohuni si i tillë.
+            </p>
+            <a
+              href="/kycja"
+              className="inline-block px-6 py-3 bg-gradient-to-r from-[#0F4C75] to-[#3282B8] text-white rounded-lg font-semibold hover:from-[#3282B8] hover:to-[#0F4C75] transition-all duration-300"
+            >
+              Kycu
+            </a>
+          </div>
         </div>
       </div>
     );
@@ -99,7 +127,7 @@ function PunetRuajtura() {
                 Nuk keni punë të ruajtura
               </h2>
               <p className="text-gray-500 text-lg max-w-md">
-                Klikoni ikonën e bookmark-ut 📑 për të ruajtur punë që ju
+                Klikoni ikonën e bookmark-ut për të ruajtur punë që ju
                 interesojnë
               </p>
             </div>
