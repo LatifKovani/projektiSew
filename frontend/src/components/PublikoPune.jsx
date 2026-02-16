@@ -313,7 +313,7 @@ function PublikoPune() {
                     <option value="" hidden disabled>
                       Zgjedh kategorinë
                     </option>
-                    <option value="Iindustria">Industria</option>
+                    <option value="Industria">Industria</option>
                     <option value="Administrate">Administratë</option>
                     <option value="Agrikulture-Industri-Ushqimore">
                       Agrikulturë dhe Industri Ushqimore

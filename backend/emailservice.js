@@ -141,7 +141,7 @@ const dergoMesazhin = async (email, emri, subject, mesazhi) => {
   await transporter.sendMail({
     from: `"Punesohu" <${process.env.EMAIL}>`,
     to: email,
-    subject: "Shpallja e punes eshte perditesuar",
+    subject: subject,
     html,
   });
 };

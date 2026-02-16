@@ -432,6 +432,26 @@ router.put("/:id", async (req, res) => {
           }
         }
       }
+    } else {
+      const allApplicants = await Aplikimi.find({ shpalljaId });
+
+      for (const app of allApplicants) {
+        const email = app.emailAplikantit?.trim();
+        if (email) {
+          try {
+            await dergoNdryshimPune(
+              email,
+              app.emriAplikantit || "Aplikant",
+              shpallja.pozitaPunes,
+              shpallja.emriKompanise,
+              `Shpallja e punës "${shpallja.pozitaPunes}" tek kompania "${shpallja.emriKompanise}" është përditësuar. ` +
+                `Ju lutemi kontrolloni faqen për detaje të reja.`,
+            );
+          } catch (emailErr) {
+            console.error(`Email dështoi për ${email}:`, emailErr);
+          }
+        }
+      }
     }
 
     res.status(200).json({
