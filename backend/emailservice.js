@@ -9,7 +9,6 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// Helper to wrap content in the common layout
 const layout = (content) => `
   <div style="background:#f4f6f8;padding:40px 0;font-family:Arial,Helvetica,sans-serif;">
     <div style="max-width:500px;margin:auto;background:#ffffff;border-radius:10px;padding:32px;text-align:center;">
@@ -128,9 +127,29 @@ ${mesazhi}
   });
 };
 
+const dergoMesazhin = async (email, emri, subject, mesazhi) => {
+  const html = layout(`
+    <h2 style="color:#111827;margin-bottom:10px;">${subject}</h2>
+    <p style="color:#4b5563;font-size:15px;margin-bottom:20px;">
+      Pershendetje ${emri || ""},
+    </p>
+    <p style="color:#4b5563;font-size:15px;margin-bottom:30px;">
+      ${mesazhi}
+    </p>
+  `);
+
+  await transporter.sendMail({
+    from: `"Punesohu" <${process.env.EMAIL}>`,
+    to: email,
+    subject: "Shpallja e punes eshte perditesuar",
+    html,
+  });
+};
+
 module.exports = {
   dergoKodin,
   dergoStatusin,
   dergoKonfirmimAplikimi,
   dergoNdryshimPune,
+  dergoMesazhin,
 };

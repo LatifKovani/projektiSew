@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Shpallja = require("../models/shpalljaSchema");
 const Aplikimi = require("../models/aplikimiSchema");
-const { dergoNdryshimPune } = require("../emailservice");
+const { dergoNdryshimPune, dergoMesazhin } = require("../emailservice");
 const axios = require("axios");
 
 async function fetchCompanyPhoto(emailKompanise, perdoruesiId) {
@@ -292,29 +292,25 @@ router.post("/kompania", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     const shpalljaId = req.params.id;
+    const shpallja = await Shpallja.findById(shpalljaId);
 
     const aplikantet = await Aplikimi.find({ shpalljaId: shpalljaId });
 
-    if (aplikantet.length > 0) {
-      const emailPerdoruesit = aplikantet
-        .map((a) => a.emailAplikantit)
-        .filter((email) => email && email.trim() !== "")
-        .map((email) => email.trim().replace(/['"]+/g, ""));
-
-      console.log("Emails sent to:", emailPerdoruesit);
-
-      if (emailPerdoruesit.length > 0) {
+    for (const aplikimi of aplikantet) {
+      const email = aplikimi.emailAplikantit;
+      if (email && email.trim() !== "") {
+        const emri = aplikimi.emriAplikantit || "";
         await dergoMesazhin(
-          emailPerdoruesit,
+          email.trim().replace(/['"]+/g, ""),
+          emri,
           "Shpallja eshte fshire",
-          `Shpallja me id: ${shpalljaId}, e kompanise:  eshte fshire nga punedhenesi`,
+          `Shpallja "${shpallja.pozitaPunes}" e kompanise "${shpallja.emriKompanise}" eshte fshire nga punedhenesi.`,
         );
       }
     }
 
     await Aplikimi.deleteMany({ shpalljaId: shpalljaId });
-
-    const shpallja = await Shpallja.findByIdAndDelete(req.params.id);
+    await Shpallja.findByIdAndDelete(shpalljaId);
 
     res.status(200).json({
       success: true,

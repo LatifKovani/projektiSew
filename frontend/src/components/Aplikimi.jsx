@@ -337,9 +337,7 @@ function Aplikimi() {
 
             <div className="grid grid-cols-2 gap-3 mt-4">
               <div className="col-span-1">
-                <label htmlFor="telefon">
-                  Numri i Telefonit <span className="text-red-500">*</span>
-                </label>
+                <label htmlFor="telefon">Numri i Telefonit</label>
                 <input
                   id="telefon"
                   type="tel"
