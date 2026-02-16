@@ -24,6 +24,7 @@ function VerifikoEmail() {
       );
 
       if (response.data.success || response.data.status) {
+        localStorage.removeItem("emailForVerification");
         showAlert("Verifikimi perfundoj me sukses", "success");
         navigate("/kycja");
       }
