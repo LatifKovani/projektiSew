@@ -271,7 +271,6 @@ function ProfiliAplikantit() {
     );
   };
 
-  // ========== EXPERIENCE SECTION ==========
   const [eksperienceRe, setEksperienceRe] = useState({
     titulli: "",
     kompania: "",
@@ -384,7 +383,6 @@ function ProfiliAplikantit() {
     );
   };
 
-  // ========== EDUCATION SECTION ==========
   const [edukimiRi, setEdukimiRi] = useState({
     titulli: "",
     institucioni: "",
@@ -497,7 +495,6 @@ function ProfiliAplikantit() {
     );
   };
 
-  // ========== PROJECTS SECTION ==========
   const [projektRi, setProjektRi] = useState({
     emriProjektit: "",
     pershkrimi: "",
@@ -577,7 +574,6 @@ function ProfiliAplikantit() {
     );
   };
 
-  // ========== SKILLS (AFTËSITË) SECTION ==========
   const handleShtoAftesine = async () => {
     if (!aftesiRe.trim()) {
       showAlert("Ju lutem shkruani emrin e aftësisë", "warning");
@@ -640,9 +636,7 @@ function ProfiliAplikantit() {
 
   return (
     <div className="max-w-5xl mx-auto mb-8 mt-10 px-4">
-      {/* Profile Header */}
       <div className="bg-white rounded-3xl shadow-sm overflow-hidden mb-6 border border-gray-200">
-        {/* Cover Banner with SVG - KEEPING THIS */}
         <div className="h-32 relative overflow-hidden">
           <svg
             className="absolute inset-0 w-full h-full"
@@ -707,7 +701,6 @@ function ProfiliAplikantit() {
           style={{ position: "relative", zIndex: 10 }}
         >
           <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
-            {/* Profile Photo */}
             <div className="relative group">
               <div className="w-32 h-32 rounded-2xl bg-gradient-to-br from-[#D6E6F2] to-[#B9D7EA] flex items-center justify-center text-[#769FCD] text-4xl font-bold shadow-xl border-4 border-white overflow-hidden">
                 {fotoProfile ? (
@@ -721,7 +714,6 @@ function ProfiliAplikantit() {
                 )}
               </div>
 
-              {/* Photo Action Buttons */}
               <div className="absolute bottom-1 right-1 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                 <button
                   onClick={() => inputFotoRef.current?.click()}
@@ -756,7 +748,6 @@ function ProfiliAplikantit() {
               />
             </div>
 
-            {/* Profile Info */}
             <div className="flex-1 text-center sm:text-left w-full mt-4 sm:mt-16">
               {shfaqEditData ? (
                 <div className="w-full space-y-4 bg-[#F5F7F8] p-6 rounded-2xl border border-gray-200">
@@ -875,7 +866,6 @@ function ProfiliAplikantit() {
                     </div>
                   </div>
 
-                  {/* Links Section */}
                   <div className="mt-4">
                     <div className="flex flex-wrap gap-2">
                       {perdoruesiData?.linqet?.map((link, index) => (
@@ -955,9 +945,7 @@ function ProfiliAplikantit() {
         </div>
       </div>
 
-      {/* Main Content */}
       <div className="bg-white rounded-3xl shadow-sm overflow-hidden p-8 border border-gray-200">
-        {/* Experience Section */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-bold text-gray-700">
@@ -1126,7 +1114,6 @@ function ProfiliAplikantit() {
 
         <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent my-8"></div>
 
-        {/* Education Section */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-bold text-gray-700">Edukimi</h2>
@@ -1295,7 +1282,6 @@ function ProfiliAplikantit() {
 
         <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent my-8"></div>
 
-        {/* Skills Section */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-bold text-gray-700">Aftësitë</h2>
@@ -1364,7 +1350,6 @@ function ProfiliAplikantit() {
 
         <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent my-8"></div>
 
-        {/* Projects Section */}
         <div>
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-bold text-gray-700">Projektet</h2>

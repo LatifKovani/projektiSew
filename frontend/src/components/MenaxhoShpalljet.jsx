@@ -49,7 +49,7 @@ function MenaxhoShpalljet() {
   const [shfaqPopupRefuzuar, setShfaqPopupRefuzuar] = useState(false);
 
   const [fotoAplikanteve, setFotoAplikanteve] = useState({});
-  const [confirmDelete, setConfirmDelete] = useState(null); // For custom confirmation modal
+  const [confirmDelete, setConfirmDelete] = useState(null);
 
   const fetchShpalljet = async () => {
     try {
@@ -147,7 +147,6 @@ function MenaxhoShpalljet() {
   };
 
   const fshijShpalljen = async (idShpallja) => {
-    // Show custom confirmation modal
     setConfirmDelete(idShpallja);
   };
 
@@ -175,7 +174,6 @@ function MenaxhoShpalljet() {
   const ruajNdryshimet = async (e) => {
     e.preventDefault();
 
-    // Validation
     if (!shpalljaKlikuar.pozitaPunes?.trim()) {
       showAlert("Ju lutem shkruani pozitën e punës", "warning");
       return;
@@ -191,7 +189,6 @@ function MenaxhoShpalljet() {
       return;
     }
 
-    // Check if primary skills have empty entries
     const hasEmptyPrimarySkills = shpalljaKlikuar.aftesitePrimare?.some(
       (skill) => !skill.trim(),
     );
@@ -203,7 +200,6 @@ function MenaxhoShpalljet() {
       return;
     }
 
-    // Check if secondary skills have empty entries
     const hasEmptySecondarySkills = shpalljaKlikuar.aftesiteSekondare?.some(
       (skill) => !skill.trim(),
     );
@@ -1009,7 +1005,6 @@ function MenaxhoShpalljet() {
         </div>
       )}
 
-      {/* Applicant Popups - Keeping original structure for brevity */}
       {shfaqPopupAplikanteve && shpalljaZgjedhurPerAplikante && (
         <div className="fixed bg-black/20 inset-0 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-lg w-full max-w-5xl max-h-[90vh] overflow-y-auto shadow-xl">
@@ -1114,10 +1109,8 @@ function MenaxhoShpalljet() {
         </div>
       )}
 
-      {/* Similar structure for Accepted and Rejected popups - keeping original for brevity */}
       {shfaqPopupPranuar && shpalljaZgjedhurPerAplikante && (
         <div className="fixed bg-black/20 inset-0 flex items-center justify-center z-50 p-4">
-          {/* Same structure as above but filtered by "Pranuar" status */}
           <div className="bg-white rounded-lg w-full max-w-5xl max-h-[90vh] overflow-y-auto shadow-xl">
             <div>
               <div className="bg-[#f8f8f9] p-6 sticky top-0 flex items-start justify-between">
@@ -1509,7 +1502,6 @@ function MenaxhoShpalljet() {
         </div>
       )}
 
-      {/* Custom Delete Confirmation Modal */}
       {confirmDelete && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 animate-in zoom-in-95 duration-200">
