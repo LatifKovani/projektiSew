@@ -41,7 +41,7 @@ function ProfiliKompanise() {
         const response = await axios.get(
           "http://localhost:3000/api/shpallja/kompania/im",
         );
-        if (response.data.success) {
+        if (response.data.success && response.data.data.status === "aktiv") {
           setPuneHapura(response.data.data);
         }
       } catch (error) {

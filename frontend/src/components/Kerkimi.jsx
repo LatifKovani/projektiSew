@@ -186,46 +186,46 @@ function Kerkimi({
                   <option value="" hidden>
                     Kategoria
                   </option>
-                  <option value="industria">Industria</option>
-                  <option value="administrate">Administratë</option>
-                  <option value="agrikulture-industri-ushqimore">
+                  <option value="Industria">Industria</option>
+                  <option value="Administrate">Administratë</option>
+                  <option value="Agrikulture-Industri-Ushqimore">
                     Agrikulturë dhe Industri Ushqimore
                   </option>
-                  <option value="arkitekture">Arkitekturë</option>
-                  <option value="banka">Banka</option>
-                  <option value="retail-distribuim">
+                  <option value="Arkitekture">Arkitekturë</option>
+                  <option value="Banka">Banka</option>
+                  <option value="Retail-Distribuim">
                     Retail dhe Distribuim
                   </option>
-                  <option value="ndertimtari-patundshmeri">
+                  <option value="Ndertimtari-Patundshmeri">
                     Ndërtimtari & Patundshmëri
                   </option>
-                  <option value="mbeshtetje-konsumatoreve-call-center">
+                  <option value="Mbeshtetje-Konsumatoreve-Call-Center">
                     Mbështetje e Konsumatorëve, Call Center
                   </option>
-                  <option value="ekonomi-finance-kontabilitet">
+                  <option value="Ekonomi-Finance-Kontabilitet">
                     Ekonomi, Financë, Kontabilitet
                   </option>
-                  <option value="edukim-shkence-hulumtim">
+                  <option value="Edukim-Shkence-Hulumtim">
                     Edukim, Shkencë & Hulumtim
                   </option>
-                  <option value="pune-te-pergjithshme">
+                  <option value="Pune-Te-Pergjithshme">
                     Punë të Përgjithshme
                   </option>
-                  <option value="burime-njerezore">Burime Njerëzore</option>
-                  <option value="teknologji-informacioni">
+                  <option value="Burime-Njerezore">Burime Njerëzore</option>
+                  <option value="Teknologji-Informacioni">
                     Teknologji e Informacionit
                   </option>
-                  <option value="sigurim">Sigurim</option>
-                  <option value="gazetari-shtyp-media">
+                  <option value="Sigurim">Sigurim</option>
+                  <option value="Gazetari-Shtyp-Media">
                     Gazetari, Shtyp & Media
                   </option>
-                  <option value="ligj-legjislacion">Ligj & Legjislacion</option>
-                  <option value="menaxhment">Menaxhment</option>
-                  <option value="marketing-reklamim-pr">
+                  <option value="Ligj-Legjislacion">Ligj & Legjislacion</option>
+                  <option value="Menaxhment">Menaxhment</option>
+                  <option value="Marketing-Reklamim-Pr">
                     Marketing, Reklamim & PR
                   </option>
-                  <option value="inxhinieri">Inxhinieri</option>
-                  <option value="shendetesi-medicine">
+                  <option value="Inxhinieri">Inxhinieri</option>
+                  <option value="Shendetesi-Medicine">
                     Shëndetësi, Medicinë
                   </option>
                   <option value="Prodhim">Prodhim</option>

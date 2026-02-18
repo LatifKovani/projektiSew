@@ -199,7 +199,7 @@ function Shpallja() {
               <div className="p-6 md:p-8 border-b border-gray-200">
                 <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
                   <div className="flex items-start gap-4">
-                    {shpallja.perdoruesiId._id ? (
+                    {shpallja?.perdoruesiId?._id && !fotoError ? (
                       <img
                         src={`http://localhost:3000/api/profili/${shpallja.perdoruesiId._id}/foto`}
                         alt="Company Logo"
@@ -469,7 +469,7 @@ function Shpallja() {
                 Rreth kompanisë
               </h3>
               <div className="flex items-center gap-3 mb-4">
-                {shpallja.perdoruesiId._id ? (
+                {shpallja?.perdoruesiId?._id && !fotoError ? (
                   <img
                     src={`http://localhost:3000/api/profili/${shpallja.perdoruesiId._id}/foto`}
                     alt="Company Logo"
@@ -493,7 +493,7 @@ function Shpallja() {
                 </div>
               </div>
 
-              {shpallja.perdoruesiId._id && (
+              {shpallja?.perdoruesiId?._id && !fotoError && (
                 <button
                   onClick={() =>
                     navigate(`/kompania/${shpallja.perdoruesiId._id}`)

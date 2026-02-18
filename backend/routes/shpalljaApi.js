@@ -359,8 +359,12 @@ router.put("/:id", async (req, res) => {
     });
 
     // Compare old and new primary skills
-    const oldSkills = oldShpallja.aftesitePrimare || [];
-    const newSkills = shpallja.aftesitePrimare || [];
+    const oldSkills = (oldShpallja.aftesitePrimare || []).map((skill) =>
+      skill.toLowerCase(),
+    );
+    const newSkills = (shpallja.aftesitePrimare || []).map((skill) =>
+      skill.toLowerCase(),
+    );
     const skillsChanged =
       oldSkills.length !== newSkills.length ||
       oldSkills.some((skill, i) => skill !== newSkills[i]);
@@ -376,7 +380,9 @@ router.put("/:id", async (req, res) => {
       const applicants = await Aplikimi.find({ shpalljaId });
 
       for (const app of applicants) {
-        const applicantSkills = app.aftesite || [];
+        const applicantSkills = (app.aftesite || []).map((skill) =>
+          skill.toLowerCase(),
+        );
         const hasAllSkills = newSkills.every((skill) =>
           applicantSkills.includes(skill),
         );
@@ -385,7 +391,7 @@ router.put("/:id", async (req, res) => {
         if (!hasAllSkills) {
           // Calculate missing skills
           const missingSkills = newSkills.filter(
-            (skill) => !applicantSkills.includes(skill),
+            (skill) => !applicantSkills.includes(skill.toLowerCase()),
           );
 
           // Delete unqualified applicant

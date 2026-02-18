@@ -41,10 +41,10 @@ function KonfigurimetLlogarise() {
       }
     };
 
-    if (id) {
+    if (id && perdoruesiData?.tipiPerdoruesit) {
       fetchData();
     }
-  }, []);
+  }, [id, perdoruesiData?.tipiPerdoruesit]);
 
   const validatePassword = (password) => {
     if (password.length < 8) {
@@ -165,8 +165,11 @@ function KonfigurimetLlogarise() {
         }
       }
     } catch (err) {
-      console.log("err: ", err);
-      if (err.response?.data?.message) {
+      console.error(err);
+
+      if (err.response?.data?.error?.includes("ekziston")) {
+        showAlert("Përdoruesi me këtë email ekziston", "error");
+      } else if (err.response?.data?.message) {
         showAlert(err.response.data.message, "error");
       } else {
         showAlert("Gabim gjatë përditësimit të të dhënave", "error");
