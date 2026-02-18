@@ -250,16 +250,12 @@ function MenaxhoShpalljet() {
   const ruajNdryshimetAplikimit = async (e) => {
     e.preventDefault();
     try {
-      // Create updated object with new status
-      const updatedAplikimi = { ...aplikimiKlikuar, status: selectedStatus };
-
       const response = await axios.put(
-        `http://localhost:3000/api/shpallja/aplikimi/${aplikimiKlikuar._id}`,
-        updatedAplikimi,
+        `http://localhost:3000/api/shpallja/statusiAplikimit/${aplikimiKlikuar._id}`,
+        { status: selectedStatus },
       );
 
       if (response.data.data.status) {
-        // Update the applicant in the list
         setAplikimet((prevAplikimet) =>
           prevAplikimet.map((aplikim) =>
             aplikim._id === aplikimiKlikuar._id
@@ -268,7 +264,6 @@ function MenaxhoShpalljet() {
           ),
         );
 
-        // Update the currently opened applicant
         setAplikimiKlikuar((prev) => ({ ...prev, status: selectedStatus }));
         setNdryshimiStatusit(true);
       }
@@ -282,8 +277,6 @@ function MenaxhoShpalljet() {
             ? "refuzuar"
             : "përditësuar";
       showAlert(`Aplikanti u ${statusText} me sukses!`, "success");
-
-      // Optionally close the popup: setAplikimiKlikuar(null);
     } catch (error) {
       console.error(error);
       showAlert("Gabim gjatë përditësimit të statusit", "error");

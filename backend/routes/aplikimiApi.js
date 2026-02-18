@@ -171,30 +171,6 @@ router.put("/aplikimi/:id", upload.single("cvFile"), async (req, res) => {
       },
     );
 
-    if (
-      aplikimiVjeter.status !== aplikimi.status &&
-      aplikimi.status === "Pranuar"
-    ) {
-      dergoStatusin(
-        aplikimi.emailAplikantit,
-        aplikimi.emriAplikantit,
-        shpallja.pozitaPunes,
-        shpallja.emriKompanise,
-        "Pranuar",
-      );
-    } else if (
-      aplikimiVjeter.status !== aplikimi.status &&
-      aplikimi.status === "Refuzuar"
-    ) {
-      dergoStatusin(
-        aplikimi.emailAplikantit,
-        aplikimi.emriAplikantit,
-        shpallja.pozitaPunes,
-        shpallja.emriKompanise,
-        "Refuzuar",
-      );
-    }
-
     return res.status(200).json({
       success: true,
       data: aplikimi,
@@ -205,6 +181,36 @@ router.put("/aplikimi/:id", upload.single("cvFile"), async (req, res) => {
       success: false,
       error: "Gabim i brendshem",
     });
+  }
+});
+
+router.put("/statusiAplikimit/:id", async (req, res) => {
+  try {
+    const aplikimiVjeter = await Aplikimi.findById(req.params.id);
+    const shpallja = await Shpallja.findById(aplikimiVjeter.shpalljaId);
+
+    const updateData = { status: req.body.status };
+
+    const aplikimi = await Aplikimi.findByIdAndUpdate(
+      req.params.id,
+      updateData,
+      { new: true, runValidators: true },
+    );
+
+    if (aplikimiVjeter.status !== aplikimi.status) {
+      dergoStatusin(
+        aplikimi.emailAplikantit,
+        aplikimi.emriAplikantit,
+        shpallja.pozitaPunes,
+        shpallja.emriKompanise,
+        aplikimi.status,
+      );
+    }
+
+    return res.status(200).json({ success: true, data: aplikimi });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ success: false, error: "Gabim i brendshem" });
   }
 });
 
