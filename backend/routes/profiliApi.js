@@ -80,6 +80,12 @@ router.put("/:id", async (req, res) => {
     });
   } catch (err) {
     console.error(err);
+    if (err.code === 11000 && err.keyPattern?.email) {
+      return res.status(409).json({
+        success: false,
+        error: "Perdoruesi me kete email ekziston",
+      });
+    }
     return res.status(500).json({
       success: false,
       message: "Gabim i brendshem i serverit",

@@ -33,6 +33,7 @@ function MenaxhoShpalljet() {
   const [shpalljaData, setShpalljaData] = useState([]);
   const [shpalljaKlikuar, setShpalljaKlikuar] = useState(null);
   const [filtrimiFaqes, setFiltrimiFaqes] = useState("Aktive");
+  const [selectedStatus, setSelectedStatus] = useState("Ne_Pritje");
   const [kerko, setKerko] = useState("");
   const [shfaqMeny, setShfaqMeny] = useState(null);
   const [menyRadhitjes, setMenyRadhitjes] = useState(false);
@@ -249,32 +250,40 @@ function MenaxhoShpalljet() {
   const ruajNdryshimetAplikimit = async (e) => {
     e.preventDefault();
     try {
+      // Create updated object with new status
+      const updatedAplikimi = { ...aplikimiKlikuar, status: selectedStatus };
+
       const response = await axios.put(
         `http://localhost:3000/api/shpallja/aplikimi/${aplikimiKlikuar._id}`,
-        aplikimiKlikuar,
+        updatedAplikimi,
       );
 
       if (response.data.data.status) {
+        // Update the applicant in the list
         setAplikimet((prevAplikimet) =>
           prevAplikimet.map((aplikim) =>
             aplikim._id === aplikimiKlikuar._id
-              ? { ...aplikim, status: aplikimiKlikuar.status }
+              ? { ...aplikim, status: selectedStatus }
               : aplikim,
           ),
         );
+
+        // Update the currently opened applicant
+        setAplikimiKlikuar((prev) => ({ ...prev, status: selectedStatus }));
         setNdryshimiStatusit(true);
       }
 
       await fetchShpalljet();
 
       const statusText =
-        aplikimiKlikuar.status === "Pranuar"
+        selectedStatus === "Pranuar"
           ? "pranuar"
-          : aplikimiKlikuar.status === "Refuzuar"
+          : selectedStatus === "Refuzuar"
             ? "refuzuar"
             : "përditësuar";
       showAlert(`Aplikanti u ${statusText} me sukses!`, "success");
-      setAplikimiKlikuar(null);
+
+      // Optionally close the popup: setAplikimiKlikuar(null);
     } catch (error) {
       console.error(error);
       showAlert("Gabim gjatë përditësimit të statusit", "error");
@@ -323,10 +332,13 @@ function MenaxhoShpalljet() {
 
   const hapAplikimin = (aplikimi) => {
     setAplikimiKlikuar(aplikimi);
+    setSelectedStatus(aplikimi.status); // initialize temporary status
   };
 
   const mbyllAplikimin = () => {
     setAplikimiKlikuar(null);
+    setNdryshimiStatusit(false);
+    setSelectedStatus("Ne_Pritje"); // reset to default
   };
 
   const sortimDates = (data) => {
@@ -1474,7 +1486,8 @@ function MenaxhoShpalljet() {
               </div>
 
               {!ndryshimiStatusit &&
-                shpalljaZgjedhurPerAplikante?.status === "skaduar" && (
+                shpalljaZgjedhurPerAplikante?.status === "skaduar" &&
+                aplikimiKlikuar.status === "Ne_Pritje" && (
                   <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
                     <label
                       htmlFor="status"
@@ -1484,13 +1497,8 @@ function MenaxhoShpalljet() {
                     </label>
                     <select
                       id="status"
-                      onChange={(e) =>
-                        setAplikimiKlikuar({
-                          ...aplikimiKlikuar,
-                          status: e.target.value,
-                        })
-                      }
-                      value={aplikimiKlikuar.status}
+                      onChange={(e) => setSelectedStatus(e.target.value)}
+                      value={selectedStatus}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     >
                       <option value="Ne_Pritje">Në Pritje</option>
@@ -1515,22 +1523,23 @@ function MenaxhoShpalljet() {
             </div>
 
             <div className="px-6 py-4 bg-white/80 backdrop-blur-lg border-t border-gray-100 rounded-b-2xl flex justify-end items-center gap-3">
-              {filtrimiFaqes !== "Aktive" && (
-                <>
-                  <button
-                    onClick={mbyllAplikimin}
-                    className="px-5 py-2.5 text-sm text-white font-semibold hover:text-black bg-primary hover:bg-white hover:border rounded-xl transition-all duration-200"
-                  >
-                    Mbyll
-                  </button>
+              <button
+                onClick={mbyllAplikimin}
+                className="px-5 py-2.5 text-sm text-white font-semibold hover:text-black bg-primary hover:bg-white hover:border rounded-xl transition-all duration-200"
+              >
+                Mbyll
+              </button>
+              {!ndryshimiStatusit &&
+                shpalljaZgjedhurPerAplikante?.status === "skaduar" &&
+                aplikimiKlikuar.status === "Ne_Pritje" &&
+                selectedStatus !== aplikimiKlikuar.status && (
                   <button
                     onClick={ruajNdryshimetAplikimit}
                     className="px-5 py-2.5 text-sm text-white font-semibold hover:text-black bg-primary hover:bg-white hover:border rounded-xl transition-all duration-200"
                   >
                     Ruaj Ndryshimet
                   </button>
-                </>
-              )}
+                )}
             </div>
           </div>
         </div>

@@ -20,9 +20,6 @@ function Footer() {
               <Link to="/listapuneve">Kërko Punë</Link>
             </li>
             <li className="hover:text-white cursor-pointer">
-              <Link to="/regjistrimi">Regjistrohu</Link>
-            </li>
-            <li className="hover:text-white cursor-pointer">
               <Link to="/llogaritpagen">Llogarit pagën</Link>
             </li>
             <li className="hover:text-white cursor-pointer">
@@ -38,9 +35,6 @@ function Footer() {
           <ul className="space-y-2 text-sm">
             <li className="hover:text-white cursor-pointer">
               <Link to="PublikoPune">Shpall Konkurs</Link>
-            </li>
-            <li className="hover:text-white cursor-pointer">
-              <Link to="Regjistrimi">Regjistro Kompani</Link>
             </li>
             <li className="hover:text-white cursor-pointer">
               <Link to="ListaAplikanteve">Lista e Aplikanteve</Link>
